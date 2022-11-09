@@ -8,6 +8,8 @@
 void Main()
 {
 	Game game;
+	game.set_up();
+
 
 	while (System::Update())
 	{

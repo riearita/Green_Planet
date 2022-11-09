@@ -172,6 +172,30 @@
     <Filter Include="Source Files\Object\Item">
       <UniqueIdentifier>{31021289-737b-43e3-8ad7-0214fc15bd2a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\System">
+      <UniqueIdentifier>{16690d71-8411-4371-b936-90e33214447f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data">
+      <UniqueIdentifier>{ca6139f1-eff0-4aa3-9eca-fb2398bdffce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data\Object">
+      <UniqueIdentifier>{d4fbdc82-c299-4f44-998d-8c54fc5dc847}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data\Object\Block_Data">
+      <UniqueIdentifier>{a6e3762e-4cc0-4920-9795-6a961acfbd4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data\Object\Start_Point">
+      <UniqueIdentifier>{91d1463f-77fb-4381-b5be-79e4a162eafa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data\Object\Item_Data">
+      <UniqueIdentifier>{40bda339-685b-4f64-a0cc-91d20078a072}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data\Object\Enemy_Data">
+      <UniqueIdentifier>{e091b886-2052-457d-a319-d11fae286a98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Definition">
+      <UniqueIdentifier>{75df1957-8e56-47fd-b715-0837b3b4da9f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -194,6 +218,33 @@
     </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Set_Up.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Set_Edit.cpp">
+      <Filter>Source Files\Scene\Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>Source Files\Object\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Source Files\Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Load_Stage.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Make_Stage.cpp">
+      <Filter>Source Files\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -841,6 +892,21 @@
     </ClInclude>
     <ClInclude Include="Item.hpp">
       <Filter>Source Files\Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Block_Data.hpp">
+      <Filter>Source Files\Data\Object\Block_Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Item_Data.hpp">
+      <Filter>Source Files\Data\Object\Item_Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_Data.hpp">
+      <Filter>Source Files\Data\Object\Enemy_Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Start_Point.hpp">
+      <Filter>Source Files\Data\Object\Start_Point</Filter>
+    </ClInclude>
+    <ClInclude Include="Definition.hpp">
+      <Filter>Source Files\Definition</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
