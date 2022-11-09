@@ -29,6 +29,9 @@ public:
 
 
 	//Play
+
+	String stage = U"test";
+
 	void update_play();
 	void draw_play();
 
@@ -38,6 +41,9 @@ public:
 
 	void control_scroll();
 
+	void use_weapon();
+
+	void go_edit();
 
 
 	//Edit
@@ -57,6 +63,7 @@ public:
 	void erase_edit();
 
 	void write_block_edit();
+	void erase_block_edit();
 
 	int edit_cur_x = 0;
 	int edit_cur_y = 0;
@@ -104,6 +111,8 @@ public:
 
 	bool edit_lock = false;
 
+	bool edit_lock_press = false;
+
 	void draw_edit_object();
 
 	void draw_edit_line();
@@ -111,6 +120,14 @@ public:
 	Array<Rect> scroll_contorller;
 	void update_edit_scroll_controller();
 	void draw_edit_scroll_controller();
+
+	Rect edit_type_select_bar;
+	int edit_type_select_scene;
+
+	Array<Rect> edit_type_select_bar_1;
+
+	void update_edit_type_select();
+	void draw_edit_type_select();
 
 
 };

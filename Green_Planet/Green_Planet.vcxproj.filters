@@ -196,6 +196,12 @@
     <Filter Include="Source Files\Definition">
       <UniqueIdentifier>{75df1957-8e56-47fd-b715-0837b3b4da9f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Object\Weapon">
+      <UniqueIdentifier>{3062e9e4-d34d-4880-ab80-45cf6c0ea0bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Object\Player_Bullet">
+      <UniqueIdentifier>{482ae9e1-78b1-4504-ad79-4df2b68003de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -245,6 +251,12 @@
     </ClCompile>
     <ClCompile Include="Make_Stage.cpp">
       <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Source Files\Object\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_Bullet.cpp">
+      <Filter>Source Files\Object\Player_Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -907,6 +919,12 @@
     </ClInclude>
     <ClInclude Include="Definition.hpp">
       <Filter>Source Files\Definition</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.hpp">
+      <Filter>Source Files\Object\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Player_Bullet.hpp">
+      <Filter>Source Files\Object\Player_Bullet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

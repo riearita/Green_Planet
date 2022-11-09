@@ -6,8 +6,8 @@ void Game::load_stage() {
 
 	{
 
-		//String adress = U"stageData/" + Format(Stage) + U"/tile.bin";
-		String adress = U"stage/test.bin";
+		String adress = U"stage/" + stage + U"/block.bin";
+		
 
 		Deserializer<BinaryReader> Reader{ adress };
 

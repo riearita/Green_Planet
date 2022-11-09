@@ -4,13 +4,33 @@ void Game::update_edit() {
 
 	edit_cur_x = (Cursor::Pos().x + scroll_x) / Definition::block_size;
 	edit_cur_y = (Cursor::Pos().y + scroll_y) / Definition::block_size;
-
-	write_edit();
+	edit_lock = false;
 
 
 	update_edit_scroll_controller();
 
+	update_edit_type_select();
+
+
+	if (edit_lock_press == true) {
+
+		edit_lock = true;
+
+		if (MouseL.pressed() != true) {
+			edit_lock_press = false;
+		}
+	}
+
+	if (edit_lock == false) {
+		write_edit();
+		erase_edit();
+	}
+
+
+	
+
 	if (KeyP.down()) {
+		save_edit();
 		go_play();
 	}
 
@@ -56,6 +76,12 @@ void Game::write_edit() {
 		write_block_edit();
 	}
 }
+void Game::erase_edit() {
+
+	if (edit_type == U"block") {
+		erase_block_edit();
+	}
+}
 
 void Game::write_block_edit() {
 
@@ -83,8 +109,23 @@ void Game::write_block_edit() {
 	}
 }
 
-void Game::erase_edit() {
+void Game::erase_block_edit() {
 
+	if (MouseR.pressed()) {
+
+		block_data.remove_if([&](Block_Data d) {
+
+			int x = d.get_x();
+			int y = d.get_y();
+
+			if (edit_cur_x == x and edit_cur_y == y) {
+				return true;
+			}
+
+			return false;
+
+			});
+	}
 }
 
 void Game::go_play() {
@@ -94,11 +135,47 @@ void Game::go_play() {
 	make_stage();
 }
 
+void Game::update_edit_type_select() {
+
+	if (edit_type_select_scene == 0) {
+
+		if (edit_type_select_bar.leftClicked()) {
+			edit_type_select_scene = 1;
+			edit_lock_press = true;
+		}
+	}
+	else if (edit_type_select_scene == 1) {
+
+		for (size_t i = 0; i < edit_type_select_bar_1.size();i++) {
+
+			if (edit_type_select_bar_1[i].leftClicked()) {
+
+				edit_type_select_scene = 0;
+				edit_lock_press = true;
+
+				switch (i)
+				{
+				case 0://block
+					edit_type = U"block";
+					break;
+				case 1:
+					break;
+				case 2:
+					break;
+				default:
+					break;
+				}
+			}
+		}
+
+	}
+}
+
 void Game::save_edit() {
 
 	{
-		//String adress = U"stage/" + Format(Stage) + U"/wall.bin";
-		String adress = U"stage/test.bin";
+		String adress = U"stage/" + stage + U"/block.bin";
+	
 
 		// バイナリファイルをオープン
 		Serializer<BinaryWriter> Writer{ adress };
@@ -114,3 +191,4 @@ void Game::save_edit() {
 	}
 
 }
+

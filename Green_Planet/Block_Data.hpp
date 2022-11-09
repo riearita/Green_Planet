@@ -18,8 +18,8 @@ public:
 
 	void set_name(String v) { name = v; }
 
-	void draw() {
-		TextureAsset(name).draw(x * Definition::block_size, y * Definition::block_size);
+	void draw(double _x,double _y) {
+		TextureAsset(name).draw(x * Definition::block_size - _x, y * Definition::block_size - _y);
 	}
 
 

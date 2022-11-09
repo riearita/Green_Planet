@@ -9,11 +9,15 @@ public:
 	}
 
 	void update(double);
-	void draw();
+	void draw(double,double);
 
-	void move();
+	
 
 	void walk();
+	void air_move();
+	
+	void jump();
+
 	void add_gravity();
 
 	Rect get_rect() { return Rect(pos.x, pos.y, size, size); }
@@ -29,17 +33,36 @@ public:
 
 	int get_size() { return size; }
 
+	void zero_speed_y() { speed.y = 0; }
+
+	void set_coyote_time(double v) { coyote_time = v; }
+
+	void zero_inertia() { inertia = 0; }
+
 private:
 
 	Vec2 old_pos;
 	Vec2 pos;
 	int size = 100;
 
-	double gravity = 5;
+	Vec2 speed = { 0,0 };
+
+
+	double gravity = 100;
 
 	bool ground = false;
 
+	//ジャンプ初速
+	double jump_v0 = -45;
 
+
+	//コヨーテタイム
+	double coyote_time = 0;
+
+	//慣性
+	double inertia = 0;
+
+	double d_time;
 	
 
 

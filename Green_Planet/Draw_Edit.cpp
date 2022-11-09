@@ -8,6 +8,8 @@ void Game::draw_edit() {
 
 	draw_edit_scroll_controller();
 
+	draw_edit_type_select();
+
 }
 
 void Game::draw_edit_line() {
@@ -55,7 +57,7 @@ void Game::draw_edit_object() {
 	
 
 	for (auto &b : block_data) {
-		b.draw();
+		b.draw(scroll_x,scroll_y);
 	}
 
 	for (auto& e : enemy_data) {
@@ -64,5 +66,35 @@ void Game::draw_edit_object() {
 
 	for (auto& i : item_data) {
 		i.draw();
+	}
+}
+
+void Game::draw_edit_type_select() {
+
+	if (edit_type_select_scene == 0) {
+
+		edit_type_select_bar.draw(Palette::White);
+	}
+	else if (edit_type_select_scene == 1) {
+
+		for (size_t i = 0; i < edit_type_select_bar_1.size(); i++) {
+
+			edit_type_select_bar_1[i].draw();
+
+				switch (i)
+				{
+				case 0://block
+					edit_type = U"block";
+					break;
+				case 1:
+					break;
+				case 2:
+					break;
+				default:
+					break;
+				}
+
+
+		}
 	}
 }

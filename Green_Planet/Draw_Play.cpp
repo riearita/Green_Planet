@@ -7,14 +7,14 @@ void Game::draw_play() {
 
 void Game::draw_object() {
 
-	player.draw();
+	player.draw(scroll_x,scroll_y);
 
 	for (auto& b : block) {
-		b.draw();
+		b.draw(scroll_x,scroll_y);
 	}
 
 	for (auto& e : enemy) {
-		e.draw();
+		e.draw(scroll_x,scroll_y);
 	}
 
 	for (auto& i : item) {

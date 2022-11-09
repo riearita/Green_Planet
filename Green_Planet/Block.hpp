@@ -9,7 +9,7 @@ public:
 	}
 
 	void update();
-	void draw();
+	void draw(double,double);
 
 	RectF get_rect() { return rect; }
 
