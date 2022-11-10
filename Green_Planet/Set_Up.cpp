@@ -24,6 +24,15 @@ void Game::set_image() {
 
 	//block
 	TextureAsset::Register(U"soil", U"image/soil.png");
+
+	//enemy
+	TextureAsset::Register(U"puni", U"image/puni.png");
+
+	//start
+	TextureAsset::Register(U"start", U"image/start.png");
+
+	//tile
+	TextureAsset::Register(U"sky", U"image/sky.png");
 }
 
 void Game::set_font() {

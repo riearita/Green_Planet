@@ -15,11 +15,21 @@ void Game::set_edit() {
 
 	//Edit_Type
 
-	edit_type_select_bar = Rect(100, 50, 150, 50);
+	edit_type_select_bar = Rect(100, 30, 200, 70);
 
-	for (int i = 0; i < 3; i++) {
-		edit_type_select_bar_1.push_back(Rect(100, 50 + (50 * i + 1), 150, 50));
+	for (int i = 0; i < 4; i++) {
+		edit_type_select_bar_1.push_back(Rect(100, 30 + (70 * (i + 1)), 200, 70));
 	}
-	
+
+	for (int i = 0; i < 4; i++) {
+		edit_type_select_seek_bar_1.push_back(Rect(100 - 50, 30 + (70 * (i + 1)), 50, 70));
+	}
+
+
+	//Edit ←→ Play
+
+	edit_go_play = Rect(600,30,200,70);
+
+	play_go_edit = Rect(600, 30, 200, 70);
 
 }

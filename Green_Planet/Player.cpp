@@ -7,17 +7,21 @@ void Player::update(double _d_time) {
 	set_old_pos();
 
 	walk();
-	if (ground==1) {
-		
-	}
-	if (ground == 0) {
-		air_move();
-	}
+	
 	jump();
 
 	add_gravity();
 
 	pos += speed;
+
+	
+
+	muteki_count -= d_time;
+	if (muteki_count < 0) {
+		muteki_count = 0;
+	}
+
+	controll_fade();
 }
 
 void Player::walk() {
@@ -39,6 +43,7 @@ void Player::walk() {
 			inertia -= reversal;
 			
 		}
+		direction = 3;
 	}
 	else if (KeyRight.pressed()) {
 
@@ -50,32 +55,37 @@ void Player::walk() {
 		else {
 			inertia += reversal;
 		}
+		direction = 4;
 	}
 
 	//キー入力がない時は慣性をなくす
 	else {
-		if (inertia > 0 or inertia < 0) {
-			
+
+		//絶対値が0.1以上
+		if (abs(inertia) > 0.1) {
+
 			double v = 80 * d_time;
-		
+
 			if (v > 0.93) {
 				v = 0.93;
 			}
-			
+
 
 			inertia *= v;
-			
-		}
 
+		}
+		else {
+			inertia = 0;
+		}
 	
 	}
 
     //慣性の上限
-	if (inertia > 10) {
-		inertia = 10;
+	if (inertia > 8) {
+		inertia = 8;
 	}
-	else if (inertia < -10) {
-		inertia = -10;
+	else if (inertia < -8) {
+		inertia = -8;
 	}
 
 	//慣性分を代入
@@ -150,5 +160,51 @@ void Player::add_gravity() {
 
 void Player::draw(double x,double y) {
 
-	TextureAsset(U"player").draw(pos.x - x, pos.y - y);
+	double fade_v = 1;
+
+	if (fade_on == 1) {
+		fade_v = 0.5;
+	}
+
+	TextureAsset(U"player").draw(pos.x - x, pos.y - y, ColorF(1.0, fade_v));
+}
+
+void Player::damage(int v) {
+
+	if (muteki_count <= 0) {
+
+		hp -= v;
+
+		if (hp < 0) {
+			hp = 0;
+		}
+
+		muteki_count = 2;
+
+		fade_count = 0;
+	}
+}
+
+void Player::controll_fade() {
+
+	if (muteki_count > 0) {
+
+		fade_count += d_time;
+
+		if (fade_count >= 0.1) {
+
+			if (fade_on == 0) {
+				fade_on = 1;
+			}
+			else if (fade_on == 1) {
+				fade_on = 0;
+			}
+			fade_count = 0;
+		}
+	}
+	else if (muteki_count == 0) {
+		fade_on = 0;
+	}
+
+	
 }

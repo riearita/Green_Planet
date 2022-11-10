@@ -202,6 +202,15 @@
     <Filter Include="Source Files\Object\Player_Bullet">
       <UniqueIdentifier>{482ae9e1-78b1-4504-ad79-4df2b68003de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Object\Tile">
+      <UniqueIdentifier>{7be61557-0f93-4b9c-ab2f-0aaac279e43e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Object\Enemy_Bullet">
+      <UniqueIdentifier>{ce68c3d3-2d51-4909-8c66-acff81309f62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data\Object\Tile_data">
+      <UniqueIdentifier>{84b734aa-8fff-4bf0-b752-1e730ddf4e14}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -257,6 +266,12 @@
     </ClCompile>
     <ClCompile Include="Player_Bullet.cpp">
       <Filter>Source Files\Object\Player_Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Source Files\Object\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_Bullet.cpp">
+      <Filter>Source Files\Object\Enemy_Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -925,6 +940,15 @@
     </ClInclude>
     <ClInclude Include="Player_Bullet.hpp">
       <Filter>Source Files\Object\Player_Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.hpp">
+      <Filter>Source Files\Object\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_Bullet.hpp">
+      <Filter>Source Files\Object\Enemy_Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile_Data.hpp">
+      <Filter>Source Files\Data\Object\Tile_data</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

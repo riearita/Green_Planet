@@ -5,6 +5,7 @@ void Game::update() {
 	switch (main_scene)
 	{
 	case 0:
+		update_go_edit();
 		update_play();
 		break;
 	case 1:
@@ -26,6 +27,7 @@ void Game::draw() {
 	{
 	case 0:
 		draw_play();
+		draw_go_edit();
 		break;
 	case 100:
 		draw_edit();

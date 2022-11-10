@@ -20,6 +20,7 @@ public:
 
 	void add_gravity();
 
+	Rect get_hit_rect() { return Rect(pos.x, pos.y, size, size); }
 	Rect get_rect() { return Rect(pos.x, pos.y, size, size); }
 	Rect get_old_rect() { return Rect(old_pos.x, old_pos.y, size, size); }
 
@@ -39,6 +40,19 @@ public:
 
 	void zero_inertia() { inertia = 0; }
 
+	Vec2 get_pos() { return pos; }
+
+	void damage(int);
+
+	void full_hp() { hp = max_hp; }
+
+	int get_hp() { return hp; }
+	int get_max_hp() { return max_hp; }
+
+	void controll_fade();
+
+	int get_direction() { return direction; }
+
 private:
 
 	Vec2 old_pos;
@@ -48,12 +62,12 @@ private:
 	Vec2 speed = { 0,0 };
 
 
-	double gravity = 100;
+	double gravity = 50;
 
 	bool ground = false;
 
 	//ジャンプ初速
-	double jump_v0 = -45;
+	double jump_v0 = -30;
 
 
 	//コヨーテタイム
@@ -61,6 +75,20 @@ private:
 
 	//慣性
 	double inertia = 0;
+
+	//無敵タイム
+	double muteki_count = 0;
+
+	//向き
+	int direction = 1;
+
+	//ｈｐ
+	int hp = 100;
+	int max_hp = 100;
+
+	//Fade
+	int fade_on = 0;
+	double fade_count = 0;
 
 	double d_time;
 	

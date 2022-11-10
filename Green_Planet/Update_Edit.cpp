@@ -11,6 +11,7 @@ void Game::update_edit() {
 
 	update_edit_type_select();
 
+	update_edit_go_play();
 
 	if (edit_lock_press == true) {
 
@@ -29,14 +30,17 @@ void Game::update_edit() {
 
 	
 
-	if (KeyP.down()) {
-		save_edit();
-		go_play();
-	}
+	
+
+	
 
 	if (KeyS.down()) {
 		save_edit();
 	}
+
+	
+
+	
 }
 
 void Game::update_edit_scroll_controller() {
@@ -75,11 +79,30 @@ void Game::write_edit() {
 	if (edit_type == U"block") {
 		write_block_edit();
 	}
+	else if (edit_type == U"enemy") {
+		write_enemy_edit();
+	}
+	else if (edit_type == U"tile") {
+		write_tile_edit();
+	}
+	else if (edit_type == U"start") {
+		write_start_edit();
+	}
 }
+
 void Game::erase_edit() {
 
 	if (edit_type == U"block") {
 		erase_block_edit();
+	}
+	else if (edit_type == U"enemy") {
+		erase_enemy_edit();
+	}
+	else if (edit_type == U"tile") {
+		erase_tile_edit();
+	}
+	else if (edit_type == U"start") {
+		erase_start_edit();
 	}
 }
 
@@ -128,12 +151,142 @@ void Game::erase_block_edit() {
 	}
 }
 
-void Game::go_play() {
+void Game::write_enemy_edit() {
 
-	main_scene = 0;
-	save_edit();
-	make_stage();
+	if (MouseL.pressed()) {//ペン
+
+		int exist = 0;
+
+		for (size_t i = 0; i < enemy_data.size(); i++) {
+
+			int x = enemy_data[i].get_x();
+			int y = enemy_data[i].get_y();
+
+			if (edit_cur_x == x && edit_cur_y == y) {//すでにある
+				exist = 1;
+
+				enemy_data[i].set_name(edit_enemy_name);
+			}
+		}
+
+		if (exist == 0) {//まだない
+
+			enemy_data.push_back(Enemy_Data(edit_enemy_name, edit_cur_x, edit_cur_y));
+		}
+	}
 }
+
+void Game::erase_enemy_edit() {
+
+	if (MouseR.pressed()) {
+
+		enemy_data.remove_if([&](Enemy_Data e) {
+
+			int x = e.get_x();
+			int y = e.get_y();
+
+			if (edit_cur_x == x and edit_cur_y == y) {
+				return true;
+			}
+
+			return false;
+
+			});
+	}
+}
+
+void Game::write_tile_edit() {
+
+	if (MouseL.pressed()) {//ペン
+
+		int exist = 0;
+
+		for (size_t i = 0; i < tile_data.size(); i++) {
+
+			int x = tile_data[i].get_x();
+			int y = tile_data[i].get_y();
+
+			if (edit_cur_x == x && edit_cur_y == y) {//すでにある
+				exist = 1;
+
+				tile_data[i].set_name(edit_tile_name);
+			}
+		}
+
+		if (exist == 0) {//まだない
+
+			tile_data.push_back(Tile_Data(edit_tile_name, edit_cur_x, edit_cur_y));
+		}
+	}
+}
+
+void Game::erase_tile_edit() {
+
+	if (MouseR.pressed()) {
+
+		tile_data.remove_if([&](Tile_Data t) {
+
+			int x = t.get_x();
+			int y = t.get_y();
+
+			if (edit_cur_x == x and edit_cur_y == y) {
+				return true;
+			}
+
+			return false;
+
+			});
+	}
+}
+
+
+void Game::write_start_edit() {
+
+	if (MouseL.pressed()) {//ペン
+
+		int exist = 0;
+
+		for (size_t i = 0; i < start_point.size(); i++) {
+
+			int x = start_point[i].get_x();
+			int y = start_point[i].get_y();
+
+			if (edit_cur_x == x && edit_cur_y == y) {//すでにある
+
+			
+
+				start_point.clear();
+			}
+		}
+
+		
+
+		start_point.push_back(Start_Point(U"start", edit_cur_x, edit_cur_y));
+		
+
+
+	}
+}
+
+void Game::erase_start_edit() {
+
+	if (MouseR.pressed()) {
+
+		start_point.remove_if([&](Start_Point s) {
+
+			int x = s.get_x();
+			int y = s.get_y();
+
+			if (edit_cur_x == x and edit_cur_y == y) {
+				return true;
+			}
+
+			return false;
+
+			});
+	}
+}
+
 
 void Game::update_edit_type_select() {
 
@@ -145,6 +298,12 @@ void Game::update_edit_type_select() {
 		}
 	}
 	else if (edit_type_select_scene == 1) {
+
+		if (edit_type_select_bar.leftClicked()) {
+			edit_type_select_scene = 0;
+			edit_lock_press = true;
+		}
+
 
 		for (size_t i = 0; i < edit_type_select_bar_1.size();i++) {
 
@@ -158,9 +317,14 @@ void Game::update_edit_type_select() {
 				case 0://block
 					edit_type = U"block";
 					break;
-				case 1:
+				case 1://Enemy
+					edit_type = U"enemy";
 					break;
-				case 2:
+				case 2://Tile
+					edit_type = U"tile";
+					break;
+				case 3://Start_Point
+					edit_type = U"start";
 					break;
 				default:
 					break;
@@ -168,6 +332,75 @@ void Game::update_edit_type_select() {
 			}
 		}
 
+		//Seek
+
+		for (size_t i = 0; i < edit_type_select_seek_bar_1.size(); i++) {
+
+			if (edit_type_select_seek_bar_1[i].leftClicked()) {
+
+				
+				edit_lock_press = true;
+
+				switch (i)
+				{
+				case 0://block
+					if (edit_block_seek == false) {
+						edit_block_seek = true;
+					}
+					else {
+						edit_block_seek = false;
+					}
+					break;
+				case 1://Enemy
+					if (edit_enemy_seek == false) {
+						edit_enemy_seek = true;
+					}
+					else {
+						edit_enemy_seek = false;
+					}
+					break;
+				case 2://Tile
+					if (edit_tile_seek == false) {
+						edit_tile_seek = true;
+					}
+					else {
+						edit_tile_seek = false;
+					}
+					break;
+				case 3://Start_Point
+					if (edit_start_seek == false) {
+						edit_start_seek = true;
+					}
+					else {
+						edit_start_seek = false;
+					}
+					break;
+				default:
+					break;
+				}
+			}
+		}
+	}
+}
+
+void Game::update_edit_go_play() {
+
+	if (edit_go_play.leftClicked()) {
+		main_scene = 0;
+		save_edit();
+		load_stage();
+		make_stage();
+
+		edit_lock = true;
+		
+	}
+}
+
+void Game::update_go_edit() {
+
+	if (play_go_edit.leftClicked()) {
+		main_scene = 100;
+		edit_lock_press = true;
 	}
 }
 
@@ -190,5 +423,55 @@ void Game::save_edit() {
 
 	}
 
+	{
+		String adress = U"stage/" + stage + U"/enemy.bin";
+
+
+		// バイナリファイルをオープン
+		Serializer<BinaryWriter> Writer{ adress };
+
+		if (not Writer) // もしオープンに失敗したら
+		{
+			throw Error{ U"Failed to open " + adress };
+		}
+
+		// シリアライズに対応したデータを記録
+		Writer(enemy_data);
+
+	}
+
+	{
+		String adress = U"stage/" + stage + U"/start.bin";
+
+
+		// バイナリファイルをオープン
+		Serializer<BinaryWriter> Writer{ adress };
+
+		if (not Writer) // もしオープンに失敗したら
+		{
+			throw Error{ U"Failed to open " + adress };
+		}
+
+		// シリアライズに対応したデータを記録
+		Writer(start_point);
+
+	}
+
+	{
+		String adress = U"stage/" + stage + U"/tile.bin";
+
+
+		// バイナリファイルをオープン
+		Serializer<BinaryWriter> Writer{ adress };
+
+		if (not Writer) // もしオープンに失敗したら
+		{
+			throw Error{ U"Failed to open " + adress };
+		}
+
+		// シリアライズに対応したデータを記録
+		Writer(tile_data);
+
+	}
 }
 
