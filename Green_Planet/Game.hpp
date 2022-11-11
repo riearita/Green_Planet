@@ -9,6 +9,7 @@
 #include"Player_Bullet.hpp"
 #include"Enemy_Bullet.hpp"
 #include"Tile.hpp"
+#include"Event.hpp"
 
 
 
@@ -17,6 +18,7 @@
 #include"Block_Data.hpp"
 #include"Tile_Data.hpp"
 #include"Start_Point.hpp"
+#include"Event_Data.hpp"
 
 #include"Definition.hpp"
 
@@ -72,9 +74,33 @@ public:
 
 	void draw_UI();
 
+
+	void check_event();
+
 	Font font_50{ 50 };
 
 	void go_edit();
+
+	//Event
+
+	//event_scene
+	int es = 0;
+	int event_number = 0;
+
+	bool message_lock = false;
+
+	int stage_under_line = 0;
+
+	void update_event();
+	void draw_event();
+
+	void z();
+	void next();
+	void z_end();
+
+	void ev_0();
+	void ev_1();
+	void ev_2();
 
 
 	//Edit
@@ -85,6 +111,7 @@ public:
 	Array<Enemy_Data> enemy_data;
 	Array<Item_Data> item_data;
 	Array<Tile_Data> tile_data;
+	Array<Event_Data> event_data;
 
 	Array<Start_Point> start_point;
 
@@ -108,6 +135,9 @@ public:
 	void write_tile_edit();
 	void erase_tile_edit();
 
+	void write_event_edit();
+	void erase_event_edit();
+
 	int edit_cur_x = 0;
 	int edit_cur_y = 0;
 
@@ -119,7 +149,7 @@ public:
 
 	String edit_tile_name = U"sky";
 
-
+	String edit_event_name = U"event";
 
 	//load
 	void load_stage();
@@ -133,6 +163,7 @@ public:
 	Array<Item> item;
 	Array<Tile> tile;
 	Array<Block> block;
+	Array<Event> event;
 	Array<Player_Bullet> player_bullet;
 	Array<Enemy_Bullet> enemy_bullet;
 
@@ -184,6 +215,7 @@ public:
 	bool edit_block_seek = true;
 	bool edit_tile_seek = true;
 	bool edit_enemy_seek = true;
+	bool edit_event_seek = true;
 	bool edit_start_seek = true;
 
 	Rect edit_go_play;
@@ -194,4 +226,17 @@ public:
 
 	void update_go_edit();
 	void draw_go_edit();
+
+	//message
+	double message_count = 0;
+
+	void update_message(double);
+	void draw_message();
+	void set_message(String);
+
+	String message_text = U"";
+
+	int message_scene = 0;
+
+	
 };

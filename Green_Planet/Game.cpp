@@ -9,7 +9,7 @@ void Game::update() {
 		update_play();
 		break;
 	case 1:
-		
+		update_event();
 		break;
 	case 2:
 		break;
@@ -28,6 +28,10 @@ void Game::draw() {
 	case 0:
 		draw_play();
 		draw_go_edit();
+		break;
+	case 1:
+		draw_play();
+		draw_event();
 		break;
 	case 100:
 		draw_edit();

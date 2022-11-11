@@ -35,6 +35,8 @@ void Game::update_play() {
 	delete_player_bullet();
 	delete_enemy_bullet();
 
+	check_event();
+
 	control_scroll();
 
 	
@@ -94,6 +96,7 @@ void Game::player_vs_block() {
 					top = 1;
 				}
 			}
+
 
 			//斜め判定
 			if (left == true or right == true) {
@@ -378,10 +381,11 @@ void Game::control_scroll() {
 	const int WIN_W = 1920;
 	const int WIN_H = 1080;
 
-	int map_chip = 120;
+	//まだ不確定
+	int map_chip = 100;
 
-	int map_chip_w = 100;
-	int map_chip_h = 100;
+	int map_chip_w = Definition::block_size;
+	int map_chip_h =Definition::block_size;
 
 	const int MAP_X = map_chip * map_chip_w;
 	const int MAP_Y = map_chip * map_chip_h;
@@ -405,7 +409,7 @@ void Game::control_scroll() {
 	double top = 0;
 
 	//マップ一番下
-	double bottom = MAP_Y;
+	double bottom = stage_under_line;
 
 
 
@@ -433,6 +437,43 @@ void Game::control_scroll() {
 		scroll_y = bottom - WIN_H;
 	}
 }
+
+void Game::check_event() {
+
+	if (KeyDown.down()) {
+
+		if (player.get_ground() == true) {
+
+			
+
+			for (auto& e : event) {
+				//調べて起動なら
+				if (e.get_start() == 0) {
+
+					//触れているか
+					if (player.get_rect().intersects(e.get_rect())) {
+
+						event_number = e.get_number();
+						main_scene = 1;
+
+						//慣性を切る
+						player.zero_inertia();
+					}
+				}
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
 
 void Game::go_edit() {
 	main_scene = 100;

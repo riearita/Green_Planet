@@ -211,6 +211,12 @@
     <Filter Include="Source Files\Data\Object\Tile_data">
       <UniqueIdentifier>{84b734aa-8fff-4bf0-b752-1e730ddf4e14}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Object\Event">
+      <UniqueIdentifier>{bebb2708-b236-48d0-b98f-3951ba613944}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data\Object\Event_Data">
+      <UniqueIdentifier>{be7fe787-b83e-4a6d-b277-a5c399aed32d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -272,6 +278,15 @@
     </ClCompile>
     <ClCompile Include="Enemy_Bullet.cpp">
       <Filter>Source Files\Object\Enemy_Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Message.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Event_Fuction.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>Source Files\Object\Event</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -949,6 +964,12 @@
     </ClInclude>
     <ClInclude Include="Tile_Data.hpp">
       <Filter>Source Files\Data\Object\Tile_data</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.hpp">
+      <Filter>Source Files\Object\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Event_Data.hpp">
+      <Filter>Source Files\Data\Object\Event_Data</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

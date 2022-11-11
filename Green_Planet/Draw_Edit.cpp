@@ -18,18 +18,22 @@ void Game::draw_edit_line() {
 
 	Array<Rect> rect;//Lineにすると軽くなるかも
 
-	for (int x = 0; x < 20; x++) {//縦線(16+4)//両サイド分
+	const int x_number = 1920 / Definition::block_size;
 
-		rect.push_back(Rect((x - 2) * 120, 0, 2, 1080 + 240));
+	for (int x = 0; x < (x_number + 6); x++) {//縦線(16+4)//両サイド分
+
+		rect.push_back(Rect((x - 3) * Definition::block_size, 0, 2, 1080 + Definition::block_size * 3));
 	}
 
-	for (int y = 0; y < 13; y++) {//横線(9+4)//両サイド分
+	const int y_number= 1080 / Definition::block_size;
 
-		rect.push_back(Rect(-120, (y - 2) * 120, 1920 + 240, 2));
+	for (int y = 0; y < (y_number+6); y++) {//横線(9+4)//両サイド分
+
+		rect.push_back(Rect(-Definition::block_size, (y - 3) * Definition::block_size, 1920 + (Definition::block_size * 3), 2));
 	}
 
-	int line_adjust_x = int(scroll_x) % 120;
-	int line_adjust_y = int(scroll_y) % 120;
+	int line_adjust_x = int(scroll_x) % Definition::block_size;
+	int line_adjust_y = int(scroll_y) % Definition::block_size;
 
 	for (size_t i = 0; i < rect.size(); i++) {
 
@@ -65,6 +69,12 @@ void Game::draw_edit_object() {
 	if (edit_block_seek == true) {
 		for (auto& b : block_data) {
 			b.draw(scroll_x, scroll_y);
+		}
+	}
+
+	if (edit_event_seek == true) {
+		for (auto& e : event_data) {
+			e.draw(scroll_x, scroll_y);
 		}
 	}
 
@@ -121,6 +131,9 @@ void Game::draw_edit_type_select() {
 				type = U"tile";
 				break;
 			case 3:
+				type = U"event";
+				break;
+			case 4:
 				type = U"start";
 				break;
 			default:

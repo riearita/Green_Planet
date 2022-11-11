@@ -4,6 +4,6 @@ class Definition {
 
 public:
 
-	const static int block_size = 120;
+	const static int block_size = 72;
 
 };

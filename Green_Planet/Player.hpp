@@ -25,6 +25,7 @@ public:
 	Rect get_old_rect() { return Rect(old_pos.x, old_pos.y, size, size); }
 
 	void set_ground(bool v) { ground = v; }
+	bool get_ground() { return ground; }
 
 	//ブロックとのあたり判定用
 	void set_old_pos() { old_pos = pos; }
@@ -57,17 +58,17 @@ private:
 
 	Vec2 old_pos;
 	Vec2 pos;
-	int size = 100;
+	int size = 70;
 
 	Vec2 speed = { 0,0 };
 
 
-	double gravity = 50;
+	double gravity = 65;
 
 	bool ground = false;
 
 	//ジャンプ初速
-	double jump_v0 = -30;
+	double jump_v0 = -32;
 
 
 	//コヨーテタイム

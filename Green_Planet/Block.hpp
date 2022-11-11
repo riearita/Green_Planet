@@ -11,7 +11,12 @@ public:
 	void update();
 	void draw(double,double);
 
-	RectF get_rect() { return rect; }
+    RectF get_rect() { return rect; }
+
+private:
+
+
+	
 
 	RectF rect;
 

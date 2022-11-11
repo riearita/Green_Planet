@@ -20,6 +20,10 @@ void Game::draw_object() {
 		b.draw(scroll_x,scroll_y);
 	}
 
+	for (auto& e : event) {
+		e.draw(scroll_x, scroll_y);
+	}
+
 	for (auto& e : enemy) {
 		e.draw(scroll_x,scroll_y);
 	}
@@ -44,6 +48,6 @@ void Game::draw_UI() {
 
 	//Max_HP
 	int max_hp = player.get_max_hp();
-	font_50(hp).draw(100, 10);
+	font_50(max_hp).draw(100, 10);
 
 }

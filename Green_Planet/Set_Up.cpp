@@ -33,6 +33,9 @@ void Game::set_image() {
 
 	//tile
 	TextureAsset::Register(U"sky", U"image/sky.png");
+
+	//event
+	TextureAsset::Register(U"event", U"image/event.png");
 }
 
 void Game::set_font() {

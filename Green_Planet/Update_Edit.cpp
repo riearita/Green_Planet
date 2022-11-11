@@ -85,6 +85,9 @@ void Game::write_edit() {
 	else if (edit_type == U"tile") {
 		write_tile_edit();
 	}
+	else if (edit_type == U"event") {
+		write_event_edit();
+	}
 	else if (edit_type == U"start") {
 		write_start_edit();
 	}
@@ -100,6 +103,9 @@ void Game::erase_edit() {
 	}
 	else if (edit_type == U"tile") {
 		erase_tile_edit();
+	}
+	else if (edit_type == U"event") {
+		erase_event_edit();
 	}
 	else if (edit_type == U"start") {
 		erase_start_edit();
@@ -239,6 +245,52 @@ void Game::erase_tile_edit() {
 	}
 }
 
+void Game::write_event_edit() {
+
+	if (MouseL.pressed()) {//ペン
+
+		int exist = 0;
+
+		for (size_t i = 0; i < event_data.size(); i++) {
+
+			int x = event_data[i].get_x();
+			int y = event_data[i].get_y();
+
+			if (edit_cur_x == x && edit_cur_y == y) {//すでにある
+
+				exist = 1;
+
+				event_data[i].set_name(edit_event_name);
+				
+			}
+		}
+
+		if (exist == 0) {//まだない
+
+			event_data.push_back(Event_Data(edit_event_name, edit_cur_x, edit_cur_y));
+		}
+	}
+}
+
+void Game::erase_event_edit() {
+
+	if (MouseR.pressed()) {
+
+		event_data.remove_if([&](Event_Data e) {
+
+			int x = e.get_x();
+			int y = e.get_y();
+
+			if (edit_cur_x == x and edit_cur_y == y) {
+				return true;
+			}
+
+			return false;
+
+			});
+	}
+}
+
 
 void Game::write_start_edit() {
 
@@ -323,7 +375,10 @@ void Game::update_edit_type_select() {
 				case 2://Tile
 					edit_type = U"tile";
 					break;
-				case 3://Start_Point
+				case 3://Tile
+					edit_type = U"event";
+					break;
+				case 4://Start_Point
 					edit_type = U"start";
 					break;
 				default:
@@ -471,6 +526,23 @@ void Game::save_edit() {
 
 		// シリアライズに対応したデータを記録
 		Writer(tile_data);
+
+	}
+
+	{
+		String adress = U"stage/" + stage + U"/event.bin";
+
+
+		// バイナリファイルをオープン
+		Serializer<BinaryWriter> Writer{ adress };
+
+		if (not Writer) // もしオープンに失敗したら
+		{
+			throw Error{ U"Failed to open " + adress };
+		}
+
+		// シリアライズに対応したデータを記録
+		Writer(event_data);
 
 	}
 }
