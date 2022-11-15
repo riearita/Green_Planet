@@ -2,6 +2,24 @@
 
 void Game::update_edit() {
 
+	switch (edit_scene)
+	{
+	case 0:
+		update_edit_main();
+		break;
+	case 1:
+		update_edit_sub();
+		break;
+	case 2:
+		update_edit_detail();
+		break;
+	default:
+		break;
+	}	
+}
+
+void Game::update_edit_main() {
+
 	edit_cur_x = (Cursor::Pos().x + scroll_x) / Definition::block_size;
 	edit_cur_y = (Cursor::Pos().y + scroll_y) / Definition::block_size;
 	edit_lock = false;
@@ -12,6 +30,8 @@ void Game::update_edit() {
 	update_edit_type_select();
 
 	update_edit_go_play();
+
+	update_edit_type_sample();
 
 	if (edit_lock_press == true) {
 
@@ -27,21 +47,95 @@ void Game::update_edit() {
 		erase_edit();
 	}
 
-
 	
 
-	
-
-	
 
 	if (KeyS.down()) {
 		save_edit();
 	}
-
-	
-
-	
 }
+
+void Game::update_edit_sub() {
+
+	if (edit_sub_close.leftClicked()) {
+		edit_scene = 0;
+		edit_lock_press = true;
+	}
+
+
+	if (edit_type == U"block") {
+
+		for (size_t i = 0; i < edit_select_block.size();i++) {
+
+			if (edit_select_block[i].leftClicked()) {
+				
+				edit_block_name = edit_block[i].get_name();
+			}
+		}
+	}
+	else if (edit_type == U"enemy") {
+
+		
+	}
+}
+
+void Game::update_edit_detail() {
+
+	if (edit_detail_close.leftClicked()) {
+		edit_scene = 0;
+		edit_lock_press = true;
+	}
+
+	if (edit_type == U"event") {
+
+		edit_update_number_input();
+
+		if (edit_number_button_enter.leftClicked()) {
+
+			if (edit_input_number != U"") {
+
+				int v = Parse<int>(edit_input_number);
+
+				if (edit_event_number == true) {
+					event_data[edit_index].set_number(v);
+				}
+				else if (edit_event_start == true) {
+					event_data[edit_index].set_start(v);
+				}
+
+				edit_input_number = U"";
+			}
+		}
+
+		if (edit_event_number_rect.leftClicked()) {
+
+			edit_event_number = true;
+
+			edit_event_start = false;	
+		}
+
+		if (edit_event_start_rect.leftClicked()) {
+
+			edit_event_start = true;
+
+			edit_event_number = false;
+		}
+	}
+}
+
+void Game::edit_update_number_input() {
+
+	for (auto& b : edit_number_button) {
+
+		if (b.get_rect().leftClicked()) {
+
+			int v = b.get_v();
+			String s_v = Format(v);
+			edit_input_number += s_v;
+		}
+	}
+}
+
 
 void Game::update_edit_scroll_controller() {
 
@@ -247,7 +341,7 @@ void Game::erase_tile_edit() {
 
 void Game::write_event_edit() {
 
-	if (MouseL.pressed()) {//ペン
+	if (MouseL.down()) {//ペン
 
 		int exist = 0;
 
@@ -260,8 +354,8 @@ void Game::write_event_edit() {
 
 				exist = 1;
 
-				event_data[i].set_name(edit_event_name);
-				
+				edit_scene = 2;
+				edit_index = i;
 			}
 		}
 
@@ -459,7 +553,16 @@ void Game::update_go_edit() {
 	}
 }
 
+void Game::update_edit_type_sample() {
+
+	if(edit_type_sample.leftClicked()) {
+		edit_scene = 1;
+		edit_lock = true;
+	}
+}
+
 void Game::save_edit() {
+
 
 	{
 		String adress = U"stage/" + stage + U"/block.bin";

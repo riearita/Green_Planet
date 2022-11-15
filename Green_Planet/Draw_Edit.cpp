@@ -2,6 +2,29 @@
 
 void Game::draw_edit() {
 
+	switch (edit_scene)
+	{
+	case 0:
+		draw_edit_main();
+		break;
+	case 1:
+		draw_edit_main();
+		draw_edit_sub();
+		break;
+	case 2:
+		draw_edit_main();
+		draw_edit_detail();
+		break;
+	default:
+		break;
+	}
+
+}
+
+void Game::draw_edit_main() {
+
+	back.draw();
+
 	draw_edit_object();
 
 	draw_edit_line();
@@ -10,7 +33,87 @@ void Game::draw_edit() {
 
 	draw_edit_type_select();
 
+	draw_edit_type_sample();
+
 	draw_edit_go_play();
+}
+
+void Game::draw_edit_sub() {
+
+	Rect rect(0, 0, 1920, 1080);
+	rect.draw(ColorF(0, 0, 0, 0.5));
+
+	edit_sub_close.draw();
+
+	if (edit_type == U"block") {
+
+		for (size_t i = 0; i < edit_select_block.size(); i++) {
+
+			String name = edit_block[i].get_name();
+
+			edit_select_block[i](TextureAsset(name)).draw();
+
+		}
+	}
+
+}
+
+void Game::draw_edit_detail() {
+
+	Rect rect(0, 0, 1920, 1080);
+	rect.draw(ColorF(0, 0, 0, 0.5));
+
+	edit_detail_close.draw();
+
+	if (edit_type == U"event") {
+
+		font_50(U"number").draw(1200, 300);
+		font_50(Format(event_data[edit_index].get_number())).draw(1200 + 300, 300);
+
+
+		font_50(U"start").draw(1200, 600);
+		font_50(Format(event_data[edit_index].get_start())).draw(1200 + 300, 600);
+
+		edit_event_number_rect.draw();
+		edit_event_start_rect.draw();
+
+		if (edit_event_number == true) {
+			edit_event_number_rect.draw(Palette::Yellow);
+		}
+		else if (edit_event_start == true) {
+			edit_event_start_rect.draw(Palette::Yellow);
+		}
+	}
+
+	draw_edit_number_input();
+}
+
+void Game::draw_edit_number_input() {
+
+	//ボタン表示
+	for (auto& b : edit_number_button) {
+		b.draw();
+	}
+
+	//数字表示
+	for (auto& b : edit_number_button) {
+
+		int v = b.get_v();
+		int x = b.get_x();
+		int y = b.get_y();
+
+		font_50(Format(v)).draw(x * 120 + 200+28, y * 120 + 500+10, Palette::Black);
+		
+	}
+
+	//左上に表示
+	font_50(Format(edit_input_number)).draw(300, 300);
+
+
+
+	edit_number_button_enter.draw();
+
+	font_50(U"Enter").draw(0 * 120 + 200+28, 3 * 120 + 500+10, Palette::Black);
 
 }
 
@@ -176,4 +279,25 @@ void Game::draw_go_edit() {
 	edit_go_play.draw();
 
 	font_50(U"edit").draw(600 + 10, 30, Palette::Green);
+}
+
+void Game::draw_edit_type_sample() {
+
+	String name = U"";
+
+	if (edit_type == U"block") {
+		name = edit_block_name;
+	}
+	else if (edit_type == U"enemy") {
+		name = edit_enemy_name;
+	}
+	else if (edit_type == U"") {
+		
+	}
+
+	
+
+	edit_type_sample(TextureAsset(name)).draw();
+
+
 }

@@ -28,10 +28,17 @@ public:
 		}
 		return false;
 	}
-	
+
+	double get_energy() { return energy; }
+	int get_max_energy() { return max_energy; }
+
 
 private:
 	String name = U"shot_gun";
 
 	double cool_time = 0;
+
+	double energy = 100;
+
+	int max_energy = 100;
 };

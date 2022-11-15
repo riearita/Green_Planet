@@ -58,7 +58,7 @@ private:
 
 	Vec2 speed = { 0,0 };
 
-	int hit_damage = 1;
+	int hit_damage = 10;
 
 	int hp = 1;
 

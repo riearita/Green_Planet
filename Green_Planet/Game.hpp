@@ -10,7 +10,7 @@
 #include"Enemy_Bullet.hpp"
 #include"Tile.hpp"
 #include"Event.hpp"
-
+#include"Back.hpp"
 
 
 #include"Enemy_Data.hpp"
@@ -22,7 +22,11 @@
 
 #include"Definition.hpp"
 
+#include"Edit_Block.hpp"
+
 #include"Weapon.hpp"
+
+#include"Edit_Number_Button.hpp"
 
 class Game {
 
@@ -71,6 +75,8 @@ public:
 	void delete_player_bullet();
 
 	void delete_enemy_bullet();
+
+	
 
 	void draw_UI();
 
@@ -158,6 +164,8 @@ public:
 
 	//Object
 
+	Back back;
+
 	Player player;
 	Array<Enemy> enemy;
 	Array<Item> item;
@@ -188,6 +196,43 @@ public:
 
 	//Edit
 
+	int edit_scene = 0;
+
+	void update_edit_main();
+	void update_edit_sub();
+
+	void draw_edit_main();
+	void draw_edit_sub();
+
+	void update_edit_detail();
+	void draw_edit_detail();
+
+	int edit_index = 0;
+	String edit_input_number = U"";
+
+	void edit_update_number_input();
+	void draw_edit_number_input();
+
+
+
+	Array<Edit_Block> edit_block;
+
+	Array<Rect> edit_select_block;
+
+	Array<Edit_Number_Button> edit_number_button;
+
+	Rect edit_number_button_enter;
+
+	bool edit_event_number = true;
+	bool edit_event_start = false;
+
+	Rect edit_event_number_rect;
+	Rect edit_event_start_rect;
+
+	Rect edit_sub_close;
+
+	Rect edit_detail_close;
+
 	bool edit_lock = false;
 
 	bool edit_lock_press = false;
@@ -205,7 +250,10 @@ public:
 
 	Array<Rect> edit_type_select_bar_1;
 
+	Rect edit_type_sample;
 
+	void update_edit_type_sample();
+	void draw_edit_type_sample();
 
 	void update_edit_type_select();
 	void draw_edit_type_select();
@@ -238,5 +286,8 @@ public:
 
 	int message_scene = 0;
 
-	
+	//Menu
+
+	void update_menu();
+	void draw_menu();
 };

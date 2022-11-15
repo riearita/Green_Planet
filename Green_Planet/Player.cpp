@@ -28,8 +28,8 @@ void Player::walk() {
 
 	//double walk_speed = 300 * d_time;
 
-	double walk_speed = 5 * d_time;
-	double reversal = 25 * d_time;
+	double walk_speed = 8 * d_time;
+	double reversal = 30 * d_time;
 
 	//キー入力中慣性を増やす
 	if (KeyLeft.pressed()) {
@@ -54,6 +54,7 @@ void Player::walk() {
 		//反転
 		else {
 			inertia += reversal;
+			
 		}
 		direction = 4;
 	}
@@ -81,11 +82,11 @@ void Player::walk() {
 	}
 
     //慣性の上限
-	if (inertia > 8) {
-		inertia = 8;
+	if (inertia > 6) {
+		inertia = 6;
 	}
-	else if (inertia < -8) {
-		inertia = -8;
+	else if (inertia < -6) {
+		inertia = -6;
 	}
 
 	//慣性分を代入

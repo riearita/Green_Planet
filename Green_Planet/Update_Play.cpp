@@ -4,7 +4,10 @@ void Game::update_play() {
 
 	const double d_time = Scene::DeltaTime();
 
-	
+	for (auto& b : block) {
+		b.update(d_time);
+	}
+
 	player.update(d_time);
 
 	for (auto& e : enemy) {
@@ -14,6 +17,8 @@ void Game::update_play() {
 	for (auto& p : player_bullet) {
 		p.update(d_time);
 	}
+
+	
 
 	weapon.update(d_time);
 
@@ -39,7 +44,7 @@ void Game::update_play() {
 
 	control_scroll();
 
-	
+
 }
 
 void Game::player_vs_block() {
@@ -55,92 +60,253 @@ void Game::player_vs_block() {
 	RectF rect_x = old_rect.movedBy(move_x, 0);
 	RectF rect_y = old_rect.movedBy(0, move_y);
 
+
+
 	for (auto& b : block) {
 
-		if (player.get_rect().intersects(b.get_rect())) {
+		if (b.get_type() == U"") {
 
-			bool right = 0;
-			bool left = 0;
-			bool top = 0;
-			bool bottom = 0;
+			if (player.get_rect().intersects(b.get_rect())) {
 
-			//右
-			if (move_x > 0) {
+				bool right = 0;
+				bool left = 0;
+				bool top = 0;
+				bool bottom = 0;
 
-				//プレイヤーの右の辺をブロックの左に合わせる
-				if (rect_x.intersects(b.get_rect())) {
-					right = true;
+				//右
+				if (move_x > 0) {
+
+					//プレイヤーの右の辺をブロックの左に合わせる
+					if (rect_x.intersects(b.get_rect())) {
+						right = true;
+					}
+				}
+				//左
+				else if (move_x < 0) {
+
+					//プレイヤーの右の辺をブロックの左に合わせる
+					if (rect_x.intersects(b.get_rect())) {
+						left = true;
+					}
+				}
+
+				//下
+				if (move_y > 0) {
+
+					//プレイヤーの下の辺をブロックの上に合わせる
+					if (rect_y.intersects(b.get_rect())) {
+						bottom = true;
+					}
+				}//上
+				else if (move_y < 0) {
+
+					//プレイヤーの上の辺をブロックの下に合わせる
+					if (rect_y.intersects(b.get_rect())) {
+						top = 1;
+					}
+				}
+
+
+				//斜め判定
+
+				if (left == true or right == true) {
+					if (top == true or bottom == true) {
+
+						left = false;
+						right = false;
+
+
+					}
+				}
+
+
+
+				if (right == true) {
+					player.set_pos_x(b.get_rect().x - player.get_size());
+					player.zero_inertia();
+
+				}
+				else if (left == true) {
+					player.set_pos_x(b.get_rect().x + b.get_rect().w);
+					player.zero_inertia();
+
+				}
+
+
+				if (bottom == true) {
+
+					player.set_pos_y(b.get_rect().y - player.get_size());
+
+					//地上にいる判定にする
+					player.set_ground(true);
+
+					//重力加速度を0にする
+					player.zero_speed_y();
+
+					//コヨーテタイム
+					player.set_coyote_time(0.2);
+
+
+				}
+				else if (top == true) {
+					player.set_pos_y(b.get_rect().y + b.get_rect().h);
+
+					//重力加速度を0にする
+					player.zero_speed_y();
 				}
 			}
-			//左
-			else if (move_x < 0) {
-
-				//プレイヤーの右の辺をブロックの左に合わせる
-				if (rect_x.intersects(b.get_rect())) {
-					left = true;
-				}
-			}
-
-			//下
-			if (move_y > 0) {
-
-				//プレイヤーの下の辺をブロックの上に合わせる
-				if (rect_y.intersects(b.get_rect())) {
-					bottom = true;
-				}
-			}//上
-			else if (move_y < 0) {
-
-				//プレイヤーの上の辺をブロックの下に合わせる
-				if (rect_y.intersects(b.get_rect())) {
-					top = 1;
-				}
-			}
-
-
-			//斜め判定
-			if (left == true or right == true) {
-				if (top == true or bottom == true) {
-					left = false;
-					right = false;
-				}
-			}
-
-			if (right == true) {
-				player.set_pos_x(b.get_rect().x - player.get_size());
-				player.zero_inertia();
-				
-			}
-			else if (left == true) {
-				player.set_pos_x(b.get_rect().x + b.get_rect().w);
-				player.zero_inertia();
-				
-			}
-			
-
-			if (bottom == true) {
-
-				player.set_pos_y(b.get_rect().y - player.get_size());
-
-				//地上にいる判定にする
-				player.set_ground(true);
-
-				//重力加速度を0にする
-				player.zero_speed_y();
-
-				//コヨーテタイム
-				player.set_coyote_time(0.2);
-			}
-			else if (top == true) {
-				player.set_pos_y(b.get_rect().y + b.get_rect().h);
-
-				//重力加速度を0にする
-				player.zero_speed_y();
-			}
-
-		
 		}
 	}
+
+   //移動するブロック
+
+	String blow = U"";
+
+	
+	double on_move_block_x = 0;
+	double on_move_block_y = 0;
+
+
+	for (auto& b : block) {
+
+		if (b.get_type() == U"move") {
+
+			//前フレームのプレイヤーが移動後のブロックに当たっている場合
+			if (player.get_old_rect().intersects(b.get_rect())) {
+
+				//左
+				if (b.get_moved_x() < 0) {
+
+					blow = U"left";
+				}
+				//右
+				else if (b.get_moved_x() > 0) {
+
+					blow = U"right";
+				}
+			}
+		}
+	}
+
+
+
+	for (auto& b : block) {
+
+		if (b.get_type() == U"move") {
+
+			if (player.get_rect().intersects(b.get_rect())) {
+
+				bool right = 0;
+				bool left = 0;
+				bool top = 0;
+				bool bottom = 0;
+
+				//右
+				if (move_x > 0) {
+
+					//プレイヤーの右の辺をブロックの左に合わせる
+					if (rect_x.intersects(b.get_rect())) {
+						right = true;
+					}
+				}
+				//左
+				else if (move_x < 0) {
+
+					//プレイヤーの右の辺をブロックの左に合わせる
+					if (rect_x.intersects(b.get_rect())) {
+						left = true;
+					}
+				}
+
+				//下
+				if (move_y > 0) {
+
+					//プレイヤーの下の辺をブロックの上に合わせる
+					if (rect_y.intersects(b.get_rect())) {
+						bottom = true;
+					}
+				}//上
+				else if (move_y < 0) {
+
+					//プレイヤーの上の辺をブロックの下に合わせる
+					if (rect_y.intersects(b.get_rect())) {
+						top = 1;
+					}
+				}
+
+
+				//斜め判定
+
+				if (left == true or right == true) {
+					if (top == true or bottom == true) {
+
+						left = false;
+						right = false;
+
+
+					}
+				}
+
+				//左向きブロック
+				if (blow == U"left") {
+					top = false;
+					bottom = false;
+					right = true;
+				}
+				//右向きブロック
+				else if (blow == U"right") {
+					top = false;
+					bottom = false;
+					left = true;
+				}
+
+
+
+				if (right == true) {
+					player.set_pos_x(b.get_rect().x - player.get_size());
+					player.zero_inertia();
+
+				}
+				else if (left == true) {
+					player.set_pos_x(b.get_rect().x + b.get_rect().w);
+					player.zero_inertia();
+
+				}
+
+
+				if (bottom == true) {
+
+					player.set_pos_y(b.get_rect().y - player.get_size());
+
+					//地上にいる判定にする
+					player.set_ground(true);
+
+					//重力加速度を0にする
+					player.zero_speed_y();
+
+					//コヨーテタイム
+					player.set_coyote_time(0.2);
+
+					on_move_block_x = b.get_moved_x();
+					on_move_block_y = b.get_moved_y();
+				}
+				else if (top == true) {
+					player.set_pos_y(b.get_rect().y + b.get_rect().h);
+
+					//重力加速度を0にする
+					player.zero_speed_y();
+				}
+			}
+		}
+	}
+
+	//動く
+	
+	player.move_x(on_move_block_x);
+	player.move_y(on_move_block_y);
+	
+
+	
 }
 
 void Game::player_bullet_vs_block() {

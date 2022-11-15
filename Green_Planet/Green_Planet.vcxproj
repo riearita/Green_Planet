@@ -126,6 +126,7 @@
     <ClCompile Include="Load_Stage.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Make_Stage.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Message.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Player_Bullet.cpp" />
@@ -334,9 +335,12 @@
     <Xml Include="App\example\xml\test.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Back.hpp" />
     <ClInclude Include="Block.hpp" />
     <ClInclude Include="Block_Data.hpp" />
+    <ClInclude Include="Edit_Block.hpp" />
     <ClInclude Include="Definition.hpp" />
+    <ClInclude Include="Edit_Number_Button.hpp" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="Enemy_Bullet.hpp" />
     <ClInclude Include="Enemy_Data.hpp" />

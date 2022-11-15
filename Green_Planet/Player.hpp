@@ -54,6 +54,9 @@ public:
 
 	int get_direction() { return direction; }
 
+	void move_x(double v) { pos.x += v; }
+	void move_y(double v) { pos.y += v; }
+
 private:
 
 	Vec2 old_pos;

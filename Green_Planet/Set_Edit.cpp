@@ -32,4 +32,55 @@ void Game::set_edit() {
 
 	play_go_edit = Rect(600, 30, 200, 70);
 
+
+
+
+
+	//タイプサンプル
+
+	edit_sub_close = Rect(400,180,200,70);
+
+
+	edit_type_sample = Rect(400,10,120,120);
+
+		edit_block.push_back(Edit_Block(U"soil"));
+		edit_block.push_back(Edit_Block(U"soil_grass"));
+		edit_block.push_back(Edit_Block(U"move_block"));
+		edit_block.push_back(Edit_Block(U"move_block_2"));
+	
+
+	for (size_t i = 0; i < edit_block.size(); i++) {
+
+		int x = i % 10;
+		int y = i / 10;
+
+		edit_select_block.push_back(Rect(360 + x * 120, 300 + y * 120, 120, 120));
+	}
+
+
+	//数字が入力
+
+
+
+	int v = 0;
+
+	edit_number_button.push_back(Edit_Number_Button(0, 1, -1));
+
+	for (int y = 0; y < 3; y++) {
+		for (int x = 0; x < 3; x++) {
+
+			v++;
+			edit_number_button.push_back(Edit_Number_Button(v, x, y));
+		}
+	}
+
+	edit_number_button_enter = Rect(0 * 120 + 200, 3 * 120 + 500, 340, 100);
+
+	edit_detail_close = Rect(400, 180, 200, 70);
+
+	//Event_Detail
+
+	edit_event_number_rect = Rect(1050,300,100,100);
+	edit_event_start_rect = Rect(1050, 600, 100, 100);
+
 }

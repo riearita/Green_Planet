@@ -217,6 +217,24 @@
     <Filter Include="Source Files\Data\Object\Event_Data">
       <UniqueIdentifier>{be7fe787-b83e-4a6d-b277-a5c399aed32d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Data\Edit">
+      <UniqueIdentifier>{cb4fd3d9-a1b4-445f-a449-494e835f0b16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data\Edit\Enemy_Edit.hpp">
+      <UniqueIdentifier>{8e6685fb-4290-45ae-a3cd-74cb233a9cfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data\Edit\Edit_Block">
+      <UniqueIdentifier>{a961ded2-a3c9-4f12-ad8c-45cbc1869641}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Object\Back">
+      <UniqueIdentifier>{0fe834c6-d43e-4a45-8a4c-02dc89ae5c75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene\Edit\Other">
+      <UniqueIdentifier>{25a76e1e-0db3-4731-a915-400abf15d7bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene\Menu">
+      <UniqueIdentifier>{95a7ef07-ca94-41cb-85b4-ea7ba21a6a32}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -287,6 +305,9 @@
     </ClCompile>
     <ClCompile Include="Event.cpp">
       <Filter>Source Files\Object\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Source Files\Scene\Menu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -970,6 +991,15 @@
     </ClInclude>
     <ClInclude Include="Event_Data.hpp">
       <Filter>Source Files\Data\Object\Event_Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit_Block.hpp">
+      <Filter>Source Files\Data\Edit\Edit_Block</Filter>
+    </ClInclude>
+    <ClInclude Include="Back.hpp">
+      <Filter>Source Files\Object\Back</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit_Number_Button.hpp">
+      <Filter>Source Files\Scene\Edit\Other</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

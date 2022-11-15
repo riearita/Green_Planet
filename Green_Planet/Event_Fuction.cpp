@@ -30,7 +30,7 @@ void Game::draw_event() {
 void Game::ev_0() {
 
 	if (es == 0) {
-		set_message(U"テストようの文字列、長さを確保するため結構長くするのですてすううううううううううううううう");
+		set_message(U"テストようの文字列、長さを確保するため結構長くするのですよおおおおおおおおおおおおおおおおおおおおおおおおおおおお");
 		z();
 	}
 	else if (es == 1) {
@@ -44,7 +44,10 @@ void Game::ev_1() {
 
 }
 void Game::ev_2() {
-
+	if (es == 0) {
+		set_message(U"２番目");
+		z_end();
+	}
 }
 
 void Game::z() {
