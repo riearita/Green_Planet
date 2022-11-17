@@ -72,7 +72,7 @@ public:
 	void update_play();
 	void draw_play();
 
-	void set_up_enemy_vs_block();
+	
 
 	void draw_object();
 

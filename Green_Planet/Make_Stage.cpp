@@ -23,7 +23,7 @@ void Game::make_stage() {
 		String name = e.get_name();
 		int x = e.get_x() * Definition::block_size;
 		int y = e.get_y() * Definition::block_size;
-		int size = Definition::block_size;
+		
 
 		enemy.push_back(Enemy(name, x, y));
 	}
@@ -33,7 +33,7 @@ void Game::make_stage() {
 		String name = t.get_name();
 		int x = t.get_x() * Definition::block_size;
 		int y = t.get_y() * Definition::block_size;
-		int size = Definition::block_size;
+		
 
 		tile.push_back(Tile(name, x, y));
 	}
@@ -64,7 +64,7 @@ void Game::make_stage() {
 	for (size_t i = 0; i < block.size(); i++) {
 
 		if (block[i].get_rect().y > bottom_y) {
-			bottom_y = block[i].get_rect().y;
+			bottom_y = int(block[i].get_rect().y);
 		}
 	}
 
@@ -72,7 +72,18 @@ void Game::make_stage() {
 
 
 	//敵位置調整
-	for (int i = 0; i < 60; i++) {
-		set_up_enemy_vs_block();
+	
+	for (auto& e : enemy) {
+
+		int h=e.get_size_h();
+
+		int buried = h - Definition::block_size;
+	
+		e.set_pos_y(e.get_rect().y - buried);
+
 	}
+
+	
+
+
 }

@@ -4,7 +4,11 @@
 class Enemy_Data {
 public:
 
-	Enemy_Data(){}
+	Enemy_Data(){
+
+		x = 0;
+		y = 0;
+	}
 
 	Enemy_Data(String _name, int _x, int _y) {
 		name = _name;
@@ -35,6 +39,7 @@ public:
 private:
 
 	String name;
-	int x, y;
+	int x = 0;
+	int	y = 0;
 
 };

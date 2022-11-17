@@ -5,7 +5,11 @@
 class Event_Data {
 public:
 
-	Event_Data() {}
+	Event_Data() {
+
+		x = 0;
+		y = 0;
+	}
 
 	Event_Data(String _name, int _x, int _y) {
 		name = _name;

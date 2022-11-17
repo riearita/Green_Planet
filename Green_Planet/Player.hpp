@@ -22,9 +22,9 @@ public:
 
 	void add_gravity();
 
-	Rect get_hit_rect() { return Rect(pos.x, pos.y, size_w, size_h); }
-	Rect get_rect() { return Rect(pos.x, pos.y, size_w, size_h); }
-	Rect get_old_rect() { return Rect(old_pos.x, old_pos.y, size_w, size_h); }
+	Rect get_hit_rect() { return Rect(int(pos.x), int(pos.y), size_w, size_h); }
+	Rect get_rect() { return Rect(int(pos.x), int(pos.y), size_w, size_h); }
+	Rect get_old_rect() { return Rect(int(old_pos.x), int(old_pos.y), size_w, size_h); }
 
 	void set_ground(bool v) { ground = v; }
 	bool get_ground() { return ground; }
@@ -64,8 +64,8 @@ private:
 
 	Vec2 old_pos;
 	Vec2 pos;
-	double size_w = 55;
-	double size_h = 105;
+	int size_w = 55;
+	int size_h = 105;
 
 	Vec2 speed = { 0,0 };
 
@@ -98,7 +98,7 @@ private:
 	int fade_on = 0;
 	double fade_count = 0;
 
-	double d_time;
+	double d_time = 0;
 
 	//ボタン
 	

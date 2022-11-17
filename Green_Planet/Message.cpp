@@ -21,7 +21,7 @@ void Game::update_message(double d_time) {
 		if (KeyZ.down()) {
 
 			message_scene = 2;
-			message_count = message_text.size() + 1;
+			message_count = double(message_text.size()) + 1;
 		}
 	}
 	//メッセージ描画後

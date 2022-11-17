@@ -4,7 +4,11 @@
 class Item_Data {
 public:
 
-	Item_Data(){}
+	Item_Data(){
+
+		x = 0;
+		y = 0;
+	}
 
 	Item_Data(String _name, int _x, int _y) {
 		name = _name;

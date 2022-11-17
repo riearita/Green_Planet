@@ -3,7 +3,11 @@
 class Start_Point {
 public:
 
-	Start_Point(){}
+	Start_Point(){
+
+		x = 0;
+		y = 0;
+	}
 
 	Start_Point(String _name, int _x, int _y) {
 		name = _name;
@@ -27,6 +31,7 @@ public:
 private:
 
 	String name;
-	int x, y;
+	int x;
+	int	y;
 
 };

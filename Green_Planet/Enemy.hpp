@@ -23,9 +23,9 @@ public:
 
 	void set_ground(bool v) { ground = v; }
 
-	Rect get_rect() { return Rect(pos.x, pos.y, size_w, size_h); }
-	Rect get_old_rect() { return Rect(old_pos.x, old_pos.y, size_w, size_h); }
-	Rect get_hit_rect(){ return Rect(pos.x, pos.y, size_w, size_h); }
+	Rect get_rect() { return Rect(int(pos.x), int(pos.y), size_w, size_h); }
+	Rect get_old_rect() { return Rect(int(old_pos.x), int(old_pos.y), size_w, size_h); }
+	Rect get_hit_rect(){ return Rect(int(pos.x), int(pos.y), size_w, size_h); }
 	int get_size_w() { return size_w; }
 	int get_size_h() { return size_h; }
 
@@ -44,6 +44,9 @@ public:
 	void turn_direction();
 
 	void turn_direction_cliff();
+
+
+	void set_direction(int v) { direction = v; }
 
 private:
 
@@ -76,6 +79,8 @@ private:
 	int direction = 3;
 
 	double turn_count = 0;
+
+	double first_direction_guard_count = 1;
 };
 
 

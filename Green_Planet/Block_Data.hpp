@@ -4,7 +4,11 @@
 class Block_Data {
 public:
 
-	Block_Data(){}
+	Block_Data(){
+
+		x = 0;
+		y = 0;
+	}
 
 	Block_Data(String _name, int _x, int _y) {
 		name = _name;
@@ -32,6 +36,7 @@ public:
 private:
 
 	String name;
-	int x, y;
+	int x = 0; 
+	int	y = 0;
 
 };

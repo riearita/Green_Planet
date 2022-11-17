@@ -361,7 +361,7 @@ void Game::write_event_edit() {
 				exist = 1;
 
 				edit_scene = 2;
-				edit_index = i;
+				edit_index = int(i);
 			}
 		}
 

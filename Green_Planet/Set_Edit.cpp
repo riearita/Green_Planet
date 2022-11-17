@@ -53,16 +53,16 @@ void Game::set_edit() {
 
 	for (size_t i = 0; i < edit_block.size(); i++) {
 
-		int x = i % 10;
-		int y = i / 10;
+		int x = int(i) % 10;
+		int y = int(i) / 10;
 
 		edit_select_block.push_back(Rect(360 + x * 120, 300 + y * 120, 120, 120));
 	}
 
 	for (size_t i = 0; i < edit_enemy.size(); i++) {
 
-		int x = i % 10;
-		int y = i / 10;
+		int x = int(i) % 10;
+		int y = int(i) / 10;
 
 		edit_select_enemy.push_back(Rect(360 + x * 120, 300 + y * 120, 120, 120));
 	}

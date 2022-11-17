@@ -27,6 +27,12 @@ void Enemy::update(double _d_time) {
 		turn_count -= d_time;
 	}
 
+	if (first_direction_guard_count > 0) {
+		first_direction_guard_count -= d_time;
+		if (first_direction_guard_count < 0) {
+			first_direction_guard_count = 0;
+		}
+	}
 
 	pos += speed;
 }
@@ -60,30 +66,37 @@ void Enemy::damage(int v) {
 
 void Enemy::turn_direction() {
 
-	if (direction == 3) {
-		direction = 4;
-	}
-	else if (direction == 4) {
-		direction = 3;
-	}
+
+
+		if (direction == 3) {
+			
+			direction = 4;
+		}
+		else if (direction == 4) {
+			
+			direction = 3;
+		}
+
 
 	
-
 }
 
 void Enemy::turn_direction_cliff() {
 
-	if (turn_count <= 0) {
+	
 
-		if (direction == 3) {
-			direction = 4;
-		}
-		else if (direction == 4) {
-			direction = 3;
-		}
+		if (turn_count <= 0) {
 
-		turn_count = 1;
-	}
+			if (direction == 3) {
+				direction = 4;
+			}
+			else if (direction == 4) {
+				direction = 3;
+			}
+
+			turn_count = 1;
+		}
+	
 }
 
 

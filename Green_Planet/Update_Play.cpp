@@ -73,7 +73,7 @@ void Game::player_vs_block() {
 	RectF rect_x = old_rect.movedBy(move_x, 0);
 	RectF rect_y = old_rect.movedBy(0, move_y);
 
-	int right_on = 0;
+	
 
 	for (auto& b : block) {
 
@@ -491,12 +491,12 @@ void Game::use_weapon() {
 				int y = 0;
 
 				if (direction == 3) {
-					x = pos.x - 20;
-					y = pos.y+60;
+					x = int(pos.x) - 20;
+					y = int(pos.y)+60;
 				}
 				else if (direction == 4) {
-					x = pos.x + 70;
-					y = pos.y+60;
+					x = int(pos.x) + 70;
+					y = int(pos.y)+60;
 				}
 
 				
@@ -647,22 +647,22 @@ void Game::control_scroll() {
 
 	//左スクロール停止
 	if (p_r.x + p_r.w / 2 < left + WIN_W / 2) {
-		scroll_x = left;
+		scroll_x = int(left);
 	}
 
 	//右スクロール停止
 	if (p_r.x + p_r.w / 2 > right - WIN_W / 2) {
-		scroll_x = right - WIN_W;
+		scroll_x = int(right) - WIN_W;
 	}
 
 	//上スクロール停止
 	if (p_r.y + p_r.h / 2 < top + WIN_H / 2) {
-		scroll_y = top;
+		scroll_y = int(top);
 	}
 
 	//下スクロール停止
 	if (p_r.y + p_r.h / 2 > bottom - WIN_H / 2) {
-		scroll_y = bottom - WIN_H;
+		scroll_y = int(bottom) - WIN_H;
 	}
 }
 
@@ -738,51 +738,8 @@ void Game::cliff_turn_enemy() {
 	}
 }
 
-void Game::set_up_enemy_vs_block() {
 
-	for (auto& e : enemy) {
 
-		e.set_ground(false);
-
-		RectF old_rect = e.get_old_rect();
-		RectF rect = e.get_rect();
-	
-		double move_y = rect.y - old_rect.y;
-
-		//x座標だけ動かしたもの・y座標だけ動かしたもの
-		
-		RectF rect_y = old_rect.movedBy(0, move_y);
-
-		for (auto& b : block) {
-
-			if (e.get_rect().intersects(b.get_rect())) {
-
-				bool bottom = 0;
-
-				//下
-				if (move_y > 0) {
-
-					//プレイヤーの下の辺をブロックの上に合わせる
-					if (rect_y.intersects(b.get_rect())) {
-						bottom = true;
-					}
-				}
-
-				if (bottom == true) {
-
-					e.set_pos_y(b.get_rect().y - e.get_size_h());
-
-					//地上にいる判定にする
-					e.set_ground(true);
-
-					//重力加速度を0にする
-					e.zero_speed_y();
-
-				}
-			}
-		}
-	}
-}
 
 
 

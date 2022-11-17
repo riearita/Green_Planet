@@ -13,8 +13,8 @@ public:
 	void update();
 	void draw(double,double);
 
-	Rect get_hit_rect() { return Rect(pos.x, pos.y, size, size); }
-	Rect get_rect() { return Rect(pos.x, pos.y, size, size); }
+	Rect get_hit_rect() { return Rect(int(pos.x), int(pos.y), size, size); }
+	Rect get_rect() { return Rect(int(pos.x), int(pos.y), size, size); }
 
 	void first();
 
