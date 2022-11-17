@@ -8,32 +8,35 @@ public:
 		pos.y = 500;
 	}
 
-	void update(double);
+	void update(double, InputGroup, InputGroup, InputGroup, InputGroup);
 	void draw(double,double);
 
 	
 
 	void walk();
-	void air_move();
+
+	
+
 	
 	void jump();
 
 	void add_gravity();
 
-	Rect get_hit_rect() { return Rect(pos.x, pos.y, size, size); }
-	Rect get_rect() { return Rect(pos.x, pos.y, size, size); }
-	Rect get_old_rect() { return Rect(old_pos.x, old_pos.y, size, size); }
+	Rect get_hit_rect() { return Rect(pos.x, pos.y, size_w, size_h); }
+	Rect get_rect() { return Rect(pos.x, pos.y, size_w, size_h); }
+	Rect get_old_rect() { return Rect(old_pos.x, old_pos.y, size_w, size_h); }
 
 	void set_ground(bool v) { ground = v; }
 	bool get_ground() { return ground; }
 
 	//ブロックとのあたり判定用
 	void set_old_pos() { old_pos = pos; }
-	void set_pos_x(int v) { pos.x = v; }
-	void set_pos_y(int v) { pos.y = v; }
+	void set_pos_x(double v) { pos.x = v;}
+	void set_pos_y(double v) { pos.y = v; }
 
 
-	int get_size() { return size; }
+	int get_size_w() { return size_w; }
+	int get_size_h() { return size_h; }
 
 	void zero_speed_y() { speed.y = 0; }
 
@@ -61,7 +64,8 @@ private:
 
 	Vec2 old_pos;
 	Vec2 pos;
-	int size = 70;
+	double size_w = 55;
+	double size_h = 105;
 
 	Vec2 speed = { 0,0 };
 
@@ -71,7 +75,7 @@ private:
 	bool ground = false;
 
 	//ジャンプ初速
-	double jump_v0 = -32;
+	double jump_v0 = -30;
 
 
 	//コヨーテタイム
@@ -84,7 +88,7 @@ private:
 	double muteki_count = 0;
 
 	//向き
-	int direction = 1;
+	int direction = 4;
 
 	//ｈｐ
 	int hp = 100;
@@ -95,8 +99,14 @@ private:
 	double fade_count = 0;
 
 	double d_time;
-	
 
+	//ボタン
+	
+	InputGroup Left;
+	InputGroup Right;
+
+	InputGroup Z;
+	InputGroup X;
 
 };
 

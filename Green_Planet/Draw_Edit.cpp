@@ -55,7 +55,16 @@ void Game::draw_edit_sub() {
 
 		}
 	}
+	if (edit_type == U"enemy") {
 
+		for (size_t i = 0; i < edit_select_enemy.size(); i++) {
+
+			String name = edit_enemy[i].get_name();
+
+			edit_select_enemy[i](TextureAsset(name)).draw();
+
+		}
+	}
 }
 
 void Game::draw_edit_detail() {

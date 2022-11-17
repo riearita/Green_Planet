@@ -7,6 +7,8 @@ public:
 		name = _name;
 		pos = {x,y};
 		first();
+
+	
 	}
 
 	void first();
@@ -14,6 +16,7 @@ public:
 	void update(double);
 	void draw(double,double);
 
+	void update_maru();
 	
 
 	void add_gravity();
@@ -37,6 +40,10 @@ public:
 	int get_hp() { return hp; }
 
 	void damage(int);
+
+	void turn_direction();
+
+	void turn_direction_cliff();
 
 private:
 
@@ -64,6 +71,11 @@ private:
 
 	double d_time = 0;
 
+	int scene = 0;
+
+	int direction = 3;
+
+	double turn_count = 0;
 };
 
 

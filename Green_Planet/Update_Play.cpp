@@ -4,12 +4,16 @@ void Game::update_play() {
 
 	const double d_time = Scene::DeltaTime();
 
+	
+
+	
 	for (auto& b : block) {
 		b.update(d_time);
 	}
 
-	player.update(d_time);
+	player.update(d_time, inputLeft, inputRight, inputZ, inputX);
 
+	
 	for (auto& e : enemy) {
 		e.update(d_time);
 	}
@@ -18,13 +22,20 @@ void Game::update_play() {
 		p.update(d_time);
 	}
 
-	
+	for (auto& e : my_effect) {
+		e.update(d_time);
+	}
 
 	weapon.update(d_time);
 
 	//VS_Block
 	player_vs_block();
+
+	
 	enemy_vs_block();
+
+
+	cliff_turn_enemy();
 
 	use_weapon();
 
@@ -39,6 +50,8 @@ void Game::update_play() {
 
 	delete_player_bullet();
 	delete_enemy_bullet();
+
+	delete_my_effect();
 
 	check_event();
 
@@ -60,7 +73,7 @@ void Game::player_vs_block() {
 	RectF rect_x = old_rect.movedBy(move_x, 0);
 	RectF rect_y = old_rect.movedBy(0, move_y);
 
-
+	int right_on = 0;
 
 	for (auto& b : block) {
 
@@ -122,20 +135,22 @@ void Game::player_vs_block() {
 
 
 				if (right == true) {
-					player.set_pos_x(b.get_rect().x - player.get_size());
+					player.set_pos_x(b.get_rect().x - player.get_size_w());
 					player.zero_inertia();
 
+				
 				}
 				else if (left == true) {
 					player.set_pos_x(b.get_rect().x + b.get_rect().w);
 					player.zero_inertia();
-
+					
 				}
 
+				
 
 				if (bottom == true) {
 
-					player.set_pos_y(b.get_rect().y - player.get_size());
+					player.set_pos_y(b.get_rect().y - player.get_size_h());
 
 					//地上にいる判定にする
 					player.set_ground(true);
@@ -157,6 +172,13 @@ void Game::player_vs_block() {
 			}
 		}
 	}
+
+
+	
+
+	
+	/*
+
 
    //移動するブロック
 
@@ -263,7 +285,7 @@ void Game::player_vs_block() {
 
 
 				if (right == true) {
-					player.set_pos_x(b.get_rect().x - player.get_size());
+					player.set_pos_x(b.get_rect().x - player.get_size_w());
 					player.zero_inertia();
 
 				}
@@ -276,7 +298,7 @@ void Game::player_vs_block() {
 
 				if (bottom == true) {
 
-					player.set_pos_y(b.get_rect().y - player.get_size());
+					player.set_pos_y(b.get_rect().y - player.get_size_h());
 
 					//地上にいる判定にする
 					player.set_ground(true);
@@ -305,7 +327,7 @@ void Game::player_vs_block() {
 	player.move_x(on_move_block_x);
 	player.move_y(on_move_block_y);
 	
-
+*/
 	
 }
 
@@ -316,6 +338,11 @@ void Game::player_bullet_vs_block() {
 		for (size_t i = 0; i < block.size(); i++) {
 
 			if (block[i].get_rect().intersects(p.get_circle())) {
+
+				String name = U"bullet_end_" + p.get_name();
+
+				my_effect.push_back(My_Effect(name, p.get_circle().x, p.get_circle().y));
+
 				return true;
 			}
 		}
@@ -339,6 +366,9 @@ void Game::enemy_vs_block() {
 		//x座標だけ動かしたもの・y座標だけ動かしたもの
 		RectF rect_x = old_rect.movedBy(move_x, 0);
 		RectF rect_y = old_rect.movedBy(0, move_y);
+
+		bool turn = false;
+		
 
 		for (auto& b : block) {
 
@@ -392,11 +422,12 @@ void Game::enemy_vs_block() {
 
 				if (right == true) {
 					e.set_pos_x(b.get_rect().x - e.get_size_w());
+					turn = true;
 					
 				}
 				else if (left == true) {
 					e.set_pos_x(b.get_rect().x + b.get_rect().w);
-					
+					turn = true;
 				}
 
 
@@ -422,6 +453,11 @@ void Game::enemy_vs_block() {
 
 			}
 		}
+
+		//壁に当たったら方向転換
+		if (turn == true) {
+			e.turn_direction();
+		}
 	}
 }
 
@@ -438,7 +474,7 @@ void Game::use_weapon() {
 
 		if (can_use == true) {
 
-			if (KeyX.pressed()) {
+			if (KeyZ.pressed()) {
 
 				double speed = 950;
 				double angle = 0;
@@ -451,10 +487,25 @@ void Game::use_weapon() {
 					angle = 0;
 				}
 
+				int x = 0;
+				int y = 0;
 
-				player_bullet.push_back(Player_Bullet(U"normal", pos.x, pos.y, speed, angle,power));
+				if (direction == 3) {
+					x = pos.x - 20;
+					y = pos.y+60;
+				}
+				else if (direction == 4) {
+					x = pos.x + 70;
+					y = pos.y+60;
+				}
 
-				weapon.set_cool_time(0.2);
+				
+
+				player_bullet.push_back(Player_Bullet(U"green",x,y, speed, angle,power));
+
+				weapon.use_energy(0);
+
+				weapon.set_cool_time(0.15);
 			}
 		}
 		
@@ -479,10 +530,16 @@ void Game::player_bullet_vs_enemy() {
 
 		int power = p.get_power();
 
-		for (size_t i = 0; i < enemy.size(); i++) {
+		
+		for (auto& e:enemy) {
 
-			if (enemy[i].get_hit_rect().intersects(p.get_circle())) {
-				enemy[i].damage(power);
+			if (e.get_hit_rect().intersects(p.get_circle())) {
+
+				String name = U"bullet_end_" + p.get_name();
+
+				my_effect.push_back(My_Effect(name,p.get_circle().x, p.get_circle().y));
+
+				e.damage(power);
 				return true;
 			}
 		}
@@ -523,6 +580,11 @@ void Game::delete_player_bullet() {
 	player_bullet.remove_if([&](Player_Bullet b) {
 
 		if (b.get_delete() == true) {
+
+			String name = U"bullet_end_" + b.get_name();
+
+			my_effect.push_back(My_Effect(name, b.get_circle().x, b.get_circle().y));
+
 			return true;
 		}
 		return false;
@@ -632,8 +694,95 @@ void Game::check_event() {
 }
 
 
+void Game::delete_my_effect() {
+
+	my_effect.remove_if([&](My_Effect e) {
+
+		if (e.get_delete() == true) {
+			return true;
+		}
+		return false;
+
+			});
+}
 
 
+void Game::cliff_turn_enemy() {
+
+	//崖際
+
+	for (auto& e : enemy) {
+
+		Rect rect = e.get_rect();
+		Rect left_rect(rect.x, rect.y, 10, rect.h+10);
+		Rect right_rect(rect.x + rect.w - 10, rect.y, 10, rect.h+10);
+
+		bool left = false;
+		bool right = false;
+
+		for (auto& b : block) {
+
+			if (left_rect.intersects(b.get_rect())) {
+				left = true;
+			}
+			if (right_rect.intersects(b.get_rect())) {
+				right = true;
+			}
+		}
+
+		//当たってない→壁際
+		if (left == false or right==false) {
+			e.turn_direction_cliff();
+		}
+
+	}
+}
+
+void Game::set_up_enemy_vs_block() {
+
+	for (auto& e : enemy) {
+
+		e.set_ground(false);
+
+		RectF old_rect = e.get_old_rect();
+		RectF rect = e.get_rect();
+	
+		double move_y = rect.y - old_rect.y;
+
+		//x座標だけ動かしたもの・y座標だけ動かしたもの
+		
+		RectF rect_y = old_rect.movedBy(0, move_y);
+
+		for (auto& b : block) {
+
+			if (e.get_rect().intersects(b.get_rect())) {
+
+				bool bottom = 0;
+
+				//下
+				if (move_y > 0) {
+
+					//プレイヤーの下の辺をブロックの上に合わせる
+					if (rect_y.intersects(b.get_rect())) {
+						bottom = true;
+					}
+				}
+
+				if (bottom == true) {
+
+					e.set_pos_y(b.get_rect().y - e.get_size_h());
+
+					//地上にいる判定にする
+					e.set_ground(true);
+
+					//重力加速度を0にする
+					e.zero_speed_y();
+
+				}
+			}
+		}
+	}
+}
 
 
 

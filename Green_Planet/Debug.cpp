@@ -10,4 +10,7 @@ void Game::set_debug() {
 	if (main_scene == 0) {
 		make_stage();
 	}
+
+
+	
 }

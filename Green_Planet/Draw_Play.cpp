@@ -18,9 +18,46 @@ void Game::draw_object() {
 		t.draw(scroll_x, scroll_y);
 	}
 
+	if (eco_block_draw == false) {
 
-	for (auto& b : block) {
-		b.draw(scroll_x,scroll_y);
+		for (auto& b : block) {
+			b.draw(scroll_x, scroll_y);
+		}
+	}
+	else if (eco_block_draw == true) {
+
+		int x1 = scroll_x - 1920 / 2 - Definition::block_size;
+		int x2 = scroll_x + 1920 + Definition::block_size;
+		int y1 = scroll_y - 1080 / 2 - Definition::block_size;
+		int y2 = scroll_y + 1080 + Definition::block_size;
+
+		
+
+		
+
+		for (auto& b : block) {
+
+			bool in = true;
+
+			RectF rect = b.get_rect();
+
+			if ((rect.x + Definition::block_size) < x1) {
+				in = false;
+			}
+			else if (x2 < rect.x) {
+				in = false;
+			}
+			else if ((rect.y + Definition::block_size) < y1) {
+				in = false;
+			}
+			else if (y2 < rect.y) {
+				in = false;
+			}
+
+			if (in == true) {
+				b.draw(scroll_x, scroll_y);
+			}
+		}
 	}
 
 	for (auto& e : event) {
@@ -41,12 +78,18 @@ void Game::draw_object() {
 	for (auto& p : player_bullet) {
 		p.draw(scroll_x, scroll_y);
 	}
+
+	for (auto& m : my_effect) {
+		m.draw(scroll_x, scroll_y);
+	}
 }
 
 void Game::draw_UI() {
 
 
 	TextureAsset(U"weapon_box").draw(30, 10);
+
+	TextureAsset(U"shot_gun").draw(30, 10);
 
 	TextureAsset(U"bar_frame").draw(30 + 120 + 10, 10 + 5+5);
 	
@@ -73,8 +116,8 @@ void Game::draw_UI() {
 	TextureAsset(U"bar_frame").draw(30 + 120 + 10, 10 + 5 + 50 + 10-5);
 
 
-	int e = weapon.get_energy();
-	int max_e = weapon.get_max_energy();
+	double e = weapon.get_energy();
+	double max_e = weapon.get_max_energy();
 
 	double d_e = e;
 	double d_max_e = max_e;

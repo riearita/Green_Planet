@@ -47,6 +47,8 @@ void Game::set_edit() {
 		edit_block.push_back(Edit_Block(U"soil_grass"));
 		edit_block.push_back(Edit_Block(U"move_block"));
 		edit_block.push_back(Edit_Block(U"move_block_2"));
+
+		edit_enemy.push_back(Edit_Enemy(U"maru"));
 	
 
 	for (size_t i = 0; i < edit_block.size(); i++) {
@@ -55,6 +57,14 @@ void Game::set_edit() {
 		int y = i / 10;
 
 		edit_select_block.push_back(Rect(360 + x * 120, 300 + y * 120, 120, 120));
+	}
+
+	for (size_t i = 0; i < edit_enemy.size(); i++) {
+
+		int x = i % 10;
+		int y = i / 10;
+
+		edit_select_enemy.push_back(Rect(360 + x * 120, 300 + y * 120, 120, 120));
 	}
 
 

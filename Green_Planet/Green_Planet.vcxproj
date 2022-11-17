@@ -122,12 +122,14 @@
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="Event_Fuction.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Load_Stage.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Make_Stage.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Message.cpp" />
+    <ClCompile Include="My_Effect.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Player_Bullet.cpp" />
     <ClCompile Include="Set_Edit.cpp" />
@@ -340,6 +342,7 @@
     <ClInclude Include="Block_Data.hpp" />
     <ClInclude Include="Edit_Block.hpp" />
     <ClInclude Include="Definition.hpp" />
+    <ClInclude Include="Edit_Enemy.hpp" />
     <ClInclude Include="Edit_Number_Button.hpp" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="Enemy_Bullet.hpp" />
@@ -349,6 +352,7 @@
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="Item.hpp" />
     <ClInclude Include="Item_Data.hpp" />
+    <ClInclude Include="My_Effect.hpp" />
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="Player_Bullet.hpp" />
     <ClInclude Include="Start_Point.hpp" />

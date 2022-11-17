@@ -70,4 +70,9 @@ void Game::make_stage() {
 
 	stage_under_line = bottom_y + Definition::block_size;
 
+
+	//敵位置調整
+	for (int i = 0; i < 60; i++) {
+		set_up_enemy_vs_block();
+	}
 }

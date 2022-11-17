@@ -45,4 +45,7 @@ private:
 	double speed = 0;
 
 	int power = 0;
+
+	int adjust_x = 0;
+	int adjust_y = 0;
 };

@@ -2,6 +2,8 @@
 
 void Game::update() {
 
+	//update_input();
+
 	switch (main_scene)
 	{
 	case 0:
@@ -39,4 +41,7 @@ void Game::draw() {
 	default:
 		break;
 	}
+
+	//Rect rect(0, 0, 1920, 1080);
+	//rect.draw(Palette::Black);
 }

@@ -220,9 +220,6 @@
     <Filter Include="Source Files\Data\Edit">
       <UniqueIdentifier>{cb4fd3d9-a1b4-445f-a449-494e835f0b16}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Data\Edit\Enemy_Edit.hpp">
-      <UniqueIdentifier>{8e6685fb-4290-45ae-a3cd-74cb233a9cfd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Data\Edit\Edit_Block">
       <UniqueIdentifier>{a961ded2-a3c9-4f12-ad8c-45cbc1869641}</UniqueIdentifier>
     </Filter>
@@ -234,6 +231,15 @@
     </Filter>
     <Filter Include="Source Files\Scene\Menu">
       <UniqueIdentifier>{95a7ef07-ca94-41cb-85b4-ea7ba21a6a32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Object\My_Effect">
+      <UniqueIdentifier>{30bccb61-ce6f-49e8-b045-a41baeb71aeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{8e04feec-52b4-41c1-92a1-fa1a7a0d8746}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data\Edit\Edit_Enemy.hpp">
+      <UniqueIdentifier>{8e6685fb-4290-45ae-a3cd-74cb233a9cfd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -308,6 +314,12 @@
     </ClCompile>
     <ClCompile Include="Menu.cpp">
       <Filter>Source Files\Scene\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="My_Effect.cpp">
+      <Filter>Source Files\Object\My_Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Source Files\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1000,6 +1012,12 @@
     </ClInclude>
     <ClInclude Include="Edit_Number_Button.hpp">
       <Filter>Source Files\Scene\Edit\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="My_Effect.hpp">
+      <Filter>Source Files\Object\My_Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit_Enemy.hpp">
+      <Filter>Source Files\Data\Edit\Edit_Enemy.hpp</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

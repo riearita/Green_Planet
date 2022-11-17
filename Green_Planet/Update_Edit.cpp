@@ -75,7 +75,13 @@ void Game::update_edit_sub() {
 	}
 	else if (edit_type == U"enemy") {
 
-		
+		for (size_t i = 0; i < edit_select_enemy.size(); i++) {
+
+			if (edit_select_enemy[i].leftClicked()) {
+
+				edit_enemy_name = edit_enemy[i].get_name();
+			}
+		}
 	}
 }
 

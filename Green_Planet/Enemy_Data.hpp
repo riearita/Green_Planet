@@ -19,7 +19,10 @@ public:
 	void set_name(String v) { name = v; }
 
 	void draw(double _x,double _y) {
-		TextureAsset(name).draw(x * Definition::block_size-_x, y * Definition::block_size-_y);
+
+		String image = name + U"_3";
+
+		TextureAsset(image).draw(x * Definition::block_size-_x, y * Definition::block_size-_y);
 	}
 
 

@@ -20,7 +20,8 @@ void Game::set_screen() {
 void Game::set_image() {
 
 	//player
-	TextureAsset::Register(U"player", U"image/player.png");
+	TextureAsset::Register(U"player_left", U"image/player/left.png");
+	TextureAsset::Register(U"player_right", U"image/player/right.png");
 
 	//block
 	TextureAsset::Register(U"soil", U"image/block/soil.png");
@@ -28,7 +29,8 @@ void Game::set_image() {
 	TextureAsset::Register(U"move_block", U"image/block/move_block.png");
 
 	//enemy
-	TextureAsset::Register(U"puni", U"image/puni.png");
+	TextureAsset::Register(U"maru_3", U"image/enemy/maru_3.png");
+	TextureAsset::Register(U"maru_4", U"image/enemy/maru_4.png");
 
 	//start
 	TextureAsset::Register(U"start", U"image/start.png");
@@ -42,6 +44,14 @@ void Game::set_image() {
 	//back
 	TextureAsset::Register(U"sky", U"image/back/sky.png");
 
+	//bullet
+	TextureAsset::Register(U"bullet_green", U"image/bullet/green.png");
+
+	//weapon
+	TextureAsset::Register(U"shot_gun", U"image/weapon/shot_gun.png");
+
+	//My_Effect
+	TextureAsset::Register(U"bullet_end_green", U"image/effect/bullet_end_green.png");
 
 	//UI
 	TextureAsset::Register(U"message_box", U"image/UI/message_box.png");

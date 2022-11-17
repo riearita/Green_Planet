@@ -11,6 +11,7 @@
 #include"Tile.hpp"
 #include"Event.hpp"
 #include"Back.hpp"
+#include"My_Effect.hpp"
 
 
 #include"Enemy_Data.hpp"
@@ -23,6 +24,7 @@
 #include"Definition.hpp"
 
 #include"Edit_Block.hpp"
+#include"Edit_Enemy.hpp"
 
 #include"Weapon.hpp"
 
@@ -32,6 +34,7 @@ class Game {
 
 public:
 
+
 	//Game
 	void set_up();
 	void update();
@@ -40,8 +43,25 @@ public:
     //Scene
 	int main_scene = 0;
 
-	
+	//Key
+	InputGroup inputLeft = KeyLeft;
+	InputGroup inputRight = KeyRight;
+	InputGroup inputUp = KeyUp;
+	InputGroup inputDown = KeyDown;
 
+	InputGroup inputZ = KeyZ;
+	InputGroup inputShift = KeyShift;
+	InputGroup inputX = KeyX;
+
+	const Array<String> indices = Range(0, (Gamepad.MaxPlayerCount - 1)).map(Format);
+
+	// ゲームパッドのプレイヤーインデックス
+	size_t playerIndex = 0;
+
+	bool eco_block_draw = true;
+
+
+	void update_input();
 
 	//Play
 
@@ -51,6 +71,8 @@ public:
 
 	void update_play();
 	void draw_play();
+
+	void set_up_enemy_vs_block();
 
 	void draw_object();
 
@@ -76,7 +98,9 @@ public:
 
 	void delete_enemy_bullet();
 
-	
+	void delete_my_effect();
+
+	void cliff_turn_enemy();
 
 	void draw_UI();
 
@@ -174,6 +198,7 @@ public:
 	Array<Event> event;
 	Array<Player_Bullet> player_bullet;
 	Array<Enemy_Bullet> enemy_bullet;
+	Array<My_Effect> my_effect;
 
 	//General
 	int scroll_x = 0;
@@ -216,8 +241,10 @@ public:
 
 
 	Array<Edit_Block> edit_block;
+	Array<Edit_Enemy> edit_enemy;
 
 	Array<Rect> edit_select_block;
+	Array<Rect> edit_select_enemy;
 
 	Array<Edit_Number_Button> edit_number_button;
 
