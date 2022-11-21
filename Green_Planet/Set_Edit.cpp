@@ -17,11 +17,14 @@ void Game::set_edit() {
 
 	edit_type_select_bar = Rect(100, 30, 200, 70);
 
-	for (int i = 0; i < 5; i++) {
+	//データの種類
+	int type_number = 7;
+
+	for (int i = 0; i < type_number; i++) {
 		edit_type_select_bar_1.push_back(Rect(100, 30 + (70 * (i + 1)), 200, 70));
 	}
 
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < type_number; i++) {
 		edit_type_select_seek_bar_1.push_back(Rect(100 - 50, 30 + (70 * (i + 1)), 50, 70));
 	}
 
@@ -45,11 +48,20 @@ void Game::set_edit() {
 
 		edit_block.push_back(Edit_Block(U"soil"));
 		edit_block.push_back(Edit_Block(U"soil_grass"));
-		edit_block.push_back(Edit_Block(U"move_block"));
-		edit_block.push_back(Edit_Block(U"move_block_2"));
+		edit_block.push_back(Edit_Block(U"soil_grass_left_cut"));
+		edit_block.push_back(Edit_Block(U"soil_grass_right_cut"));
+		edit_block.push_back(Edit_Block(U"soil_grass_double_cut"));
+		edit_block.push_back(Edit_Block(U"break_block"));
+
+		//edit_block.push_back(Edit_Block(U"move_block"));
+		//edit_block.push_back(Edit_Block(U"move_block_2"));
 
 		edit_enemy.push_back(Edit_Enemy(U"maru"));
-	
+		edit_enemy.push_back(Edit_Enemy(U"don"));
+		edit_enemy.push_back(Edit_Enemy(U"pyou"));
+
+		edit_event.push_back(Edit_Event(U"life_server"));
+		edit_event.push_back(Edit_Event(U"save_server"));
 
 	for (size_t i = 0; i < edit_block.size(); i++) {
 
@@ -65,6 +77,14 @@ void Game::set_edit() {
 		int y = int(i) / 10;
 
 		edit_select_enemy.push_back(Rect(360 + x * 120, 300 + y * 120, 120, 120));
+	}
+
+	for (size_t i = 0; i < edit_event.size(); i++) {
+
+		int x = int(i) % 10;
+		int y = int(i) / 10;
+
+		edit_select_event.push_back(Rect(360 + x * 120, 300 + y * 120, 120, 120));
 	}
 
 

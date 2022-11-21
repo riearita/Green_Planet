@@ -27,6 +27,9 @@ public:
 
 	bool get_delete();
 
+	void set_will_delete() { will_delete = true; }
+	bool get_will_delete() { return will_delete; }
+
 private:
 
 
@@ -48,4 +51,6 @@ private:
 
 	int adjust_x = 0;
 	int adjust_y = 0;
+
+	bool will_delete = false;
 };

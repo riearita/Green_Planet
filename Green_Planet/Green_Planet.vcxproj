@@ -132,6 +132,7 @@
     <ClCompile Include="My_Effect.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Player_Bullet.cpp" />
+    <ClCompile Include="Save_Load.cpp" />
     <ClCompile Include="Set_Edit.cpp" />
     <ClCompile Include="Set_Up.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -140,8 +141,10 @@
     </ClCompile>
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Update_Edit.cpp" />
+    <ClCompile Include="Update_Enemy.cpp" />
     <ClCompile Include="Update_Play.cpp" />
     <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="Weapon_Have.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\engine\texture\box-shadow\128.png" />
@@ -343,6 +346,7 @@
     <ClInclude Include="Edit_Block.hpp" />
     <ClInclude Include="Definition.hpp" />
     <ClInclude Include="Edit_Enemy.hpp" />
+    <ClInclude Include="Edit_Event.hpp" />
     <ClInclude Include="Edit_Number_Button.hpp" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="Enemy_Bullet.hpp" />
@@ -352,14 +356,18 @@
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="Item.hpp" />
     <ClInclude Include="Item_Data.hpp" />
+    <ClInclude Include="Item_Have.hpp" />
     <ClInclude Include="My_Effect.hpp" />
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="Player_Bullet.hpp" />
+    <ClInclude Include="Stage_Data.hpp" />
     <ClInclude Include="Start_Point.hpp" />
+    <ClInclude Include="Status.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Tile.hpp" />
     <ClInclude Include="Tile_Data.hpp" />
     <ClInclude Include="Weapon.hpp" />
+    <ClInclude Include="White_Effect.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App\example\obj\blacksmith.obj">

@@ -58,6 +58,8 @@ public:
 		}
 	}
 
+	void full_energy() { energy = max_energy; }
+
 
 private:
 	String name = U"shot_gun";

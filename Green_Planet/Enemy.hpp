@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include"White_Effect.hpp"
 
 class Enemy {
 public:
@@ -8,7 +9,7 @@ public:
 		pos = {x,y};
 		first();
 
-	
+		
 	}
 
 	void first();
@@ -16,7 +17,10 @@ public:
 	void update(double);
 	void draw(double,double);
 
+	void update_each();
+	
 	void update_maru();
+	void update_don();
 	
 
 	void add_gravity();
@@ -48,6 +52,27 @@ public:
 
 	void set_direction(int v) { direction = v; }
 
+	bool get_white() {
+		if (white_time > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	double get_white_count() {
+		return white_time;
+	}
+
+	bool get_death() { return death; }
+
+	int get_make_bullet() { return make_bullet; }
+
+	int get_make_bullet_x() { return make_bullet_x;}
+
+	int get_make_bullet_y() { return make_bullet_y; }
+
+	void reset_make_bullet() { make_bullet = -1; }
+
 private:
 
 
@@ -76,12 +101,29 @@ private:
 
 	int scene = 0;
 
+	double count = 0;
+
 	int direction = 3;
 
 	double turn_count = 0;
 
 	double first_direction_guard_count = 1;
+
+	double white_time = 0;
+
+	bool death = false;
+
+	int make_bullet = -1;
+
+	int make_bullet_x = 0;
+	int make_bullet_y = 0;
+
 };
+
+
+
+
+
 
 
 

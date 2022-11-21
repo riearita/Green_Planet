@@ -22,6 +22,10 @@ void Game::update_play() {
 		p.update(d_time);
 	}
 
+	for (auto& e : enemy_bullet) {
+		e.update(d_time);
+	}
+
 	for (auto& e : my_effect) {
 		e.update(d_time);
 	}
@@ -30,14 +34,13 @@ void Game::update_play() {
 
 	//VS_Block
 	player_vs_block();
-
-	
 	enemy_vs_block();
 
 
 	cliff_turn_enemy();
 
 	use_weapon();
+	enemy_make_bullet();
 
 	//VS_Player_Bullet
 	player_bullet_vs_block();
@@ -45,13 +48,20 @@ void Game::update_play() {
 
 	death_enemy();
 
+	//VS_Enemy_Bullet
+	enemy_bullet_vs_player();
+	
+
+	//VS_Player
 	player_vs_enemy();
 	player_vs_item();
 
+	//Delete
 	delete_player_bullet();
 	delete_enemy_bullet();
-
 	delete_my_effect();
+
+
 
 	check_event();
 
@@ -333,6 +343,51 @@ void Game::player_vs_block() {
 
 void Game::player_bullet_vs_block() {
 
+	block.remove_if([&](Block b) {
+
+		if (b.get_name() == U"break_block") {
+
+			for (auto& p : player_bullet) {
+
+				if (b.get_rect().intersects(p.get_circle())) {
+
+					int x = b.get_rect().x + b.get_rect().w / 2;
+					int y = b.get_rect().y + b.get_rect().h / 2;
+
+
+
+					my_effect.push_back(My_Effect(U"block_smoke", x, y));
+
+					p.set_will_delete();
+
+					return true;
+				}
+
+
+			}
+		}
+
+		return false;
+
+			});
+
+
+	player_bullet.remove_if([&](Player_Bullet p) {
+
+		if (p.get_will_delete() == true) {
+
+			String name = U"bullet_end_" + p.get_name();
+
+			my_effect.push_back(My_Effect(name, p.get_circle().x, p.get_circle().y));
+
+			return true;
+		}
+
+		return false;
+
+			});
+
+
 	player_bullet.remove_if([&](Player_Bullet p) {
 
 		for (size_t i = 0; i < block.size(); i++) {
@@ -554,6 +609,31 @@ void Game::death_enemy() {
 	enemy.remove_if([&](Enemy e) {
 
 		if (e.get_hp() <= 0) {
+
+			int x = e.get_rect().x + e.get_size_w() / 2;
+			int y = e.get_rect().y + e.get_size_h() / 2;
+
+			
+		
+			my_effect.push_back(My_Effect(U"enemy_smoke",x,y));
+
+			
+
+			String name = U"";
+
+			int ran = Random(9);
+
+			if (ran == 0) {
+				name = U"heart";
+			}
+			else {
+				name = U"metal";
+			}
+
+			
+			item.push_back(Item(name, x, y));
+
+
 			return true;
 		}
 
@@ -567,6 +647,18 @@ void Game::player_vs_item() {
 	item.remove_if([&](Item i) {
 
 		if (player.get_hit_rect().intersects(i.get_hit_rect())) {
+
+			String name = i.get_name();
+
+			if (name == U"heart") {
+				player.plus_hp(10);
+				
+			}
+			else if (name == U"metal") {
+				status.plus_metal(1);
+			}
+
+
 			return true;
 		}
 
@@ -738,6 +830,42 @@ void Game::cliff_turn_enemy() {
 	}
 }
 
+void Game::enemy_make_bullet() {
+
+	for (auto& e : enemy) {
+
+		int type = e.get_make_bullet();
+		int x = e.get_rect().x + e.get_make_bullet_x();
+		int y = e.get_rect().y +e.get_make_bullet_y();
+
+
+		if (type == 0) {
+
+			enemy_bullet.push_back(Enemy_Bullet(U"blue", x, y, 300, 180, 20));
+		}
+
+		e.reset_make_bullet();
+	}
+
+
+}
+
+void Game::enemy_bullet_vs_player() {
+
+	enemy_bullet.remove_if([&](Enemy_Bullet e) {
+
+		if (e.get_circle().intersects(player.get_hit_rect())) {
+
+			int power = e.get_power();
+
+			player.damage(power);
+
+			return true;
+		}
+		return false;
+
+			});
+}
 
 
 

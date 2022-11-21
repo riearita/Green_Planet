@@ -18,6 +18,8 @@ public:
 
 	void first();
 
+	String get_name() { return name; }
+
 
 private:
 
@@ -26,6 +28,9 @@ private:
 	Vec2 pos = { 0,0 };
 
 	int size = 0;
+
+	int adjust_x = 0;
+	int adjust_y = 0;
 };
 
 

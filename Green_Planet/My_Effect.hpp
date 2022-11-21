@@ -41,8 +41,18 @@ private:
 	double fade_v=0;
 	double fade_delete=0;
 	double fade_plus = 0;
+	bool fade_on = true;
+
 
 	double size=0;
 	double size_up=0;//一秒あたりの増加量
 	double size_down=0;
+
+	bool page_on = false;
+	int page = 0;
+	int page_max = 0;
+	double page_count = 0;
+	double page_change = 0;
+
+	
 };

@@ -17,6 +17,34 @@ void Game::update_event() {
 	case 2:
 		ev_2();
 		break;
+	case 3:
+		ev_3();
+		break;
+	case 4:
+		ev_4();
+		break;
+	case 5:
+		ev_5();
+		break;
+	case 6:
+		ev_6();
+		break;
+	case 7:
+		ev_7();
+		break;
+	case 8:
+		ev_8();
+		break;
+	case 9:
+		ev_9();
+		break;
+	case 10:
+		ev_10();
+		break;
+	case 11:
+		break;
+	case 12:
+		break;
 	default:
 		break;
 	}
@@ -27,7 +55,38 @@ void Game::draw_event() {
 	draw_message();
 }
 
+//ライフサーバー
 void Game::ev_0() {
+
+	if (es == 0) {
+		set_message(U"ライフとエネルギーが全回復した！！");
+		player.full_hp();
+		weapon.full_energy();
+		z_end();
+	}
+	
+	
+}
+
+//セーブサーバー
+void Game::ev_1() {
+
+	if (es == 0) {
+		set_message(U"セーブしました！！");
+	
+		z_end();
+	}
+}
+
+
+void Game::ev_2() {
+	if (es == 0) {
+		set_message(U"２番目");
+		z_end();
+	}
+}
+
+void Game::ev_3() {
 
 	if (es == 0) {
 		set_message(U"テストようの文字列、長さを確保するため結構長くするのですよおおおおおおおおおおおおおおおおおおおおおおおおおおおお");
@@ -37,17 +96,34 @@ void Game::ev_0() {
 		set_message(U"二言めはこちらです、表示てすとおおおおお");
 		z_end();
 	}
-	
-	
 }
-void Game::ev_1() {
+
+void Game::ev_4() {
 
 }
-void Game::ev_2() {
-	if (es == 0) {
-		set_message(U"２番目");
-		z_end();
-	}
+
+void Game::ev_5() {
+
+}
+
+void Game::ev_6() {
+
+}
+
+void Game::ev_7() {
+
+}
+
+void Game::ev_8() {
+
+}
+
+void Game::ev_9() {
+
+}
+
+void Game::ev_10() {
+
 }
 
 void Game::z() {

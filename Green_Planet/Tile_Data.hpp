@@ -10,8 +10,9 @@ public:
 		y = 0;
 	}
 
-	Tile_Data(String _name, int _x, int _y) {
+	Tile_Data(String _name,int _layer, int _x, int _y) {
 		name = _name;
+		layer = _layer;
 		x = _x;
 		y = _y;
 	}
@@ -19,6 +20,8 @@ public:
 	String get_name() { return name; }
 	int get_x() { return x; }
 	int get_y() { return y; }
+
+	int get_layer() { return layer; }
 
 	void set_name(String v) { name = v; }
 
@@ -30,7 +33,7 @@ public:
 	template <class Archive>
 	void SIV3D_SERIALIZE(Archive& archive)
 	{
-		archive(name, x, y);
+		archive(name,layer, x, y);
 	}
 
 private:
@@ -38,5 +41,7 @@ private:
 	String name;
 	int x = 0;
 	int y = 0;
+
+	int layer = 0;
 
 };

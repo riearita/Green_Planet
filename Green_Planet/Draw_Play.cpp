@@ -12,10 +12,18 @@ void Game::draw_play() {
 void Game::draw_object() {
 
 	//背景
-	back.draw();
+	back.draw(scroll_x, scroll_y);
 
 	for (auto& t : tile) {
-		t.draw(scroll_x, scroll_y);
+		if (t.get_layer() == 1) {
+			t.draw(scroll_x, scroll_y);
+		}
+	}
+
+	for (auto& t : tile) {
+		if (t.get_layer() == 0) {
+			t.draw(scroll_x, scroll_y);
+		}
 	}
 
 	if (eco_block_draw == false) {
@@ -65,7 +73,25 @@ void Game::draw_object() {
 	}
 
 	for (auto& e : enemy) {
-		e.draw(scroll_x,scroll_y);
+		
+		if (e.get_white() == false) {
+			e.draw(scroll_x, scroll_y);
+		}
+		else if (e.get_white() == true) {
+
+		    const ScopedCustomShader2D shader{ psWhite };
+
+			cbWhite->strength = e.get_white_count();
+
+			Graphics2D::SetPSConstantBuffer(1, cbWhite);
+
+
+			e.draw(scroll_x, scroll_y);
+		}
+
+		
+
+	
 	}
 
 	for (auto& i : item) {
@@ -79,8 +105,18 @@ void Game::draw_object() {
 		p.draw(scroll_x, scroll_y);
 	}
 
+	for (auto& e : enemy_bullet) {
+		e.draw(scroll_x, scroll_y);
+	}
+
 	for (auto& m : my_effect) {
 		m.draw(scroll_x, scroll_y);
+	}
+
+	for (auto& t : tile) {
+		if (t.get_layer() == -1) {
+			t.draw(scroll_x, scroll_y);
+		}
 	}
 }
 

@@ -25,10 +25,18 @@
 
 #include"Edit_Block.hpp"
 #include"Edit_Enemy.hpp"
+#include"Edit_Event.hpp"
 
 #include"Weapon.hpp"
 
 #include"Edit_Number_Button.hpp"
+
+#include"Status.hpp"
+#include"Weapon_Have.hpp"
+#include"Item_Have.hpp"
+
+#include"Stage_Data.hpp"
+
 
 class Game {
 
@@ -61,6 +69,8 @@ public:
 	bool eco_block_draw = true;
 
 
+	Array<Stage_Data> stage_data;
+
 	void update_input();
 
 	//Play
@@ -86,6 +96,10 @@ public:
 
 	void player_bullet_vs_enemy();
 
+	void enemy_bullet_vs_player();
+
+
+
 	void death_enemy();
 
 	void player_vs_item();
@@ -106,6 +120,8 @@ public:
 
 
 	void check_event();
+
+	void enemy_make_bullet();
 
 	Font font_50{ 50 };
 
@@ -131,7 +147,14 @@ public:
 	void ev_0();
 	void ev_1();
 	void ev_2();
-
+	void ev_3();
+	void ev_4();
+	void ev_5();
+	void ev_6();
+	void ev_7();
+	void ev_8();
+	void ev_9();
+	void ev_10();
 
 	//Edit
 
@@ -162,8 +185,12 @@ public:
 	void write_start_edit();
 	void erase_start_edit();
 
+	int tile_layer = 0;
+
 	void write_tile_edit();
 	void erase_tile_edit();
+
+
 
 	void write_event_edit();
 	void erase_event_edit();
@@ -175,9 +202,10 @@ public:
 
 	String edit_block_name = U"soil";
 
-	String edit_enemy_name = U"puni";
+	String edit_enemy_name = U"maru";
 
-	String edit_tile_name = U"sky";
+	String edit_tile_name = U"tree";
+	
 
 	String edit_event_name = U"event";
 
@@ -210,6 +238,8 @@ public:
 	void set_music();
 	void set_font();
 	void set_edit();
+	void set_shader();
+	void set_stage_data();
 	void set_debug();
 
 	//Music
@@ -232,6 +262,8 @@ public:
 	void update_edit_detail();
 	void draw_edit_detail();
 
+	void draw_edit_will_tile();
+
 	int edit_index = 0;
 	String edit_input_number = U"";
 
@@ -242,9 +274,11 @@ public:
 
 	Array<Edit_Block> edit_block;
 	Array<Edit_Enemy> edit_enemy;
+	Array<Edit_Event> edit_event;
 
 	Array<Rect> edit_select_block;
 	Array<Rect> edit_select_enemy;
+	Array<Rect> edit_select_event;
 
 	Array<Edit_Number_Button> edit_number_button;
 
@@ -288,7 +322,9 @@ public:
 	Array<Rect> edit_type_select_seek_bar_1;
 
 	bool edit_block_seek = true;
-	bool edit_tile_seek = true;
+	bool edit_tile_0_seek = true;
+	bool edit_tile_1_seek = true;
+	bool edit_tile_01_seek = true;
 	bool edit_enemy_seek = true;
 	bool edit_event_seek = true;
 	bool edit_start_seek = true;
@@ -317,4 +353,19 @@ public:
 
 	void update_menu();
 	void draw_menu();
+
+	//shader
+
+	PixelShader psWhite;
+
+	ConstantBuffer<WhiteEffectConstants> cbWhite;
+
+	//Status
+	Status status;
+	Array<Weapon_Have> weapon_have;
+	Array<Item_Have> item_have;
+
+
 };
+
+   

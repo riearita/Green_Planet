@@ -6,16 +6,20 @@ public:
 
 	Back(){}
 
+	void set_name(String v) { name = v; }
 
 
+	void draw(double x,double y) {
+		
+		//TextureAsset(name).draw(0 - x, 0 - y);
 
-	void draw() {
-		Rect rect(0, 0, 1920, 1080);
-		rect.draw(color);
-	
+		TextureAsset(name).draw(0, 0 - y);
+
+		
 	}
 
 private:
 
-	ColorF color = Palette::Lightskyblue;
+
+	String name;
 };

@@ -3,8 +3,9 @@
 class Tile {
 public:
 
-	Tile(String _name,int x,int y){
+	Tile(String _name,int _layer,int x,int y){
 		name = _name;
+		layer = _layer;
 		pos = { x,y };
 
 	}

@@ -6,7 +6,7 @@ void Game::make_stage() {
 	enemy.clear();
 	tile.clear();
 	event.clear();
-	start_point.clear();
+	
 
 	for (auto& b : block_data) {
 
@@ -33,9 +33,9 @@ void Game::make_stage() {
 		String name = t.get_name();
 		int x = t.get_x() * Definition::block_size;
 		int y = t.get_y() * Definition::block_size;
-		
+		int layer = t.get_layer();
 
-		tile.push_back(Tile(name, x, y));
+		tile.push_back(Tile(name,layer, x, y));
 	}
 
 	for (auto& e : event_data) {
@@ -57,6 +57,12 @@ void Game::make_stage() {
 
 		player.set_pos_x(s_x);
 		player.set_pos_y(s_y);
+
+		int h = player.get_size_h();
+
+		int buried = h - Definition::block_size;
+
+		player.set_pos_y(player.get_rect().y - buried);
 	}
 
 	int bottom_y = 0;
@@ -83,7 +89,14 @@ void Game::make_stage() {
 
 	}
 
-	
+	//背景
+
+	for (auto& s : stage_data) {
+
+		if (s.get_name() == stage) {
+			back.set_name(s.get_back_name());
+		}
+	}
 
 
 }

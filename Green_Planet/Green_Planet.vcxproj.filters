@@ -241,6 +241,18 @@
     <Filter Include="Source Files\Data\Edit\Edit_Enemy.hpp">
       <UniqueIdentifier>{8e6685fb-4290-45ae-a3cd-74cb233a9cfd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Shader">
+      <UniqueIdentifier>{75967fc7-ec52-454d-bf30-41bd920a483b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Status">
+      <UniqueIdentifier>{ddbcd8f3-7035-458a-be49-92cf1ee2b0d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data\Stage">
+      <UniqueIdentifier>{58c67000-6222-441e-bb62-5308a9f1aa61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data\Edit\Edit_Event">
+      <UniqueIdentifier>{4baaa6c0-845a-433d-90cf-5cb316b6167c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -320,6 +332,15 @@
     </ClCompile>
     <ClCompile Include="Input.cpp">
       <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon_Have.hpp">
+      <Filter>Source Files\Status</Filter>
+    </ClCompile>
+    <ClCompile Include="Save_Load.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Update_Enemy.cpp">
+      <Filter>Source Files\Object\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1018,6 +1039,21 @@
     </ClInclude>
     <ClInclude Include="Edit_Enemy.hpp">
       <Filter>Source Files\Data\Edit\Edit_Enemy.hpp</Filter>
+    </ClInclude>
+    <ClInclude Include="White_Effect.hpp">
+      <Filter>Source Files\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Item_Have.hpp">
+      <Filter>Source Files\Status</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage_Data.hpp">
+      <Filter>Source Files\Data\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit_Event.hpp">
+      <Filter>Source Files\Data\Edit\Edit_Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Status.hpp">
+      <Filter>Source Files\Status</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -23,9 +23,11 @@ void Game::draw_edit() {
 
 void Game::draw_edit_main() {
 
-	back.draw();
+	back.draw(scroll_x, scroll_y);
 
 	draw_edit_object();
+
+	draw_edit_will_tile();
 
 	draw_edit_line();
 
@@ -59,9 +61,17 @@ void Game::draw_edit_sub() {
 
 		for (size_t i = 0; i < edit_select_enemy.size(); i++) {
 
-			String name = edit_enemy[i].get_name();
-
+			String name = edit_enemy[i].get_name() + U"_3";
 			edit_select_enemy[i](TextureAsset(name)).draw();
+
+		}
+	}
+	if (edit_type == U"event") {
+
+		for (size_t i = 0; i < edit_select_event.size(); i++) {
+
+			String name = edit_event[i].get_name();
+			edit_select_event[i](TextureAsset(name)).draw();
 
 		}
 	}
@@ -172,15 +182,33 @@ void Game::draw_edit_scroll_controller() {
 
 void Game::draw_edit_object() {
 
-	if (edit_tile_seek == true) {
+	if (edit_tile_1_seek == true) {
 		for (auto& t : tile_data) {
-			t.draw(scroll_x, scroll_y);
+			if (t.get_layer() == 1) {
+				t.draw(scroll_x, scroll_y);
+			}
+		}
+	}
+
+	if (edit_tile_0_seek == true) {
+		for (auto& t : tile_data) {
+			if (t.get_layer() == 0) {
+				t.draw(scroll_x, scroll_y);
+			}
 		}
 	}
 
 	if (edit_block_seek == true) {
 		for (auto& b : block_data) {
 			b.draw(scroll_x, scroll_y);
+		}
+	}
+
+	if (edit_tile_01_seek == true) {
+		for (auto& t : tile_data) {
+			if (t.get_layer() == -1) {
+				t.draw(scroll_x, scroll_y);
+			}
 		}
 	}
 
@@ -240,12 +268,18 @@ void Game::draw_edit_type_select() {
 				type = U"enemy";
 				break;
 			case 2:
-				type = U"tile";
+				type = U"tile_0";
 				break;
 			case 3:
-				type = U"event";
+				type = U"tile_1";
 				break;
 			case 4:
+				type = U"tile_-1";
+				break;
+			case 5:
+				type = U"event";
+				break;
+			case 6:
 				type = U"start";
 				break;
 			default:
@@ -298,7 +332,7 @@ void Game::draw_edit_type_sample() {
 		name = edit_block_name;
 	}
 	else if (edit_type == U"enemy") {
-		name = edit_enemy_name;
+		name = edit_enemy_name + U"_3";
 	}
 	else if (edit_type == U"") {
 		
@@ -309,4 +343,18 @@ void Game::draw_edit_type_sample() {
 	edit_type_sample(TextureAsset(name)).draw();
 
 
+}
+
+void Game::draw_edit_will_tile() {
+
+	int x = edit_cur_x * Definition::block_size;
+	int y = edit_cur_y * Definition::block_size;
+
+
+	if (edit_type == U"tile_0" or edit_type == U"tile_1" or edit_type == U"tile_-1") {
+
+		TextureAsset(edit_tile_name).draw(x - scroll_x, y - scroll_y, ColorF(1.0, 0.5));
+
+
+	}
 }

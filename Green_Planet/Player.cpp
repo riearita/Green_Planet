@@ -33,6 +33,9 @@ void Player::update(double _d_time,InputGroup _left,InputGroup _right, InputGrou
 
 void Player::walk() {
 
+	walking = false;
+
+
 	// 加速度 (px/s^2)
 	const double a = 800.0;
 
@@ -46,11 +49,13 @@ void Player::walk() {
 	{
 		inertia -= (a * d_time);
 		direction = 3;
+		walking = true;
 	}
 	else if (KeyRight.pressed())
 	{
 		inertia += (a * d_time);
 		direction = 4;
+		walking = true;
 	}
 	else
 	{
@@ -64,6 +69,28 @@ void Player::walk() {
 
 	// 移動
 	pos.x += (inertia * d_time);
+
+
+	//アニメーション
+	if (walking == true) {
+		walk_count += d_time;
+
+		if (walk_count >= 0.1) {
+			walk_page++;
+
+			walk_count = 0;
+
+			if (walk_page == 7) {
+				walk_page = 0;
+			}
+		}
+
+	}
+	else if (walking == false) {
+
+		walk_page = 0;
+		walk_count = 0;
+	}
 }
 
 
@@ -151,11 +178,27 @@ void Player::draw(double x,double y) {
 		dire = U"right";
 	}
 
-	image = U"player_" + dire;
+	String status = U"";
 
-	
+	//jump
+	if (KeyX.pressed() and ground == 0) {
+		status = U"_jump";
+	}
+	//落下中
+	else if (ground == 0) {
+		status = U"";
+	}
+	else if (walking == true) {
+		status = U"_walk_" + Format(walk_page);
+	}
 
-	TextureAsset(image).draw(pos.x - x, pos.y - y, ColorF(1.0, fade_v));
+	image = U"player_" + dire + status;
+
+	//Print << U"image::" << image;
+
+	//get_rect().movedBy(-x, -y).draw(Palette::Gray);
+
+	TextureAsset(image).draw(pos.x - adjust_x - x, pos.y - y, ColorF(1.0, fade_v));
 }
 
 void Player::damage(int v) {

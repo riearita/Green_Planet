@@ -23,8 +23,8 @@ public:
 	void add_gravity();
 
 	Rect get_hit_rect() { return Rect(int(pos.x), int(pos.y), size_w, size_h); }
-	Rect get_rect() { return Rect(int(pos.x), int(pos.y), size_w, size_h); }
-	Rect get_old_rect() { return Rect(int(old_pos.x), int(old_pos.y), size_w, size_h); }
+	RectF get_rect() { return RectF(pos.x, pos.y, size_w, size_h); }
+	RectF get_old_rect() { return RectF(old_pos.x,old_pos.y, size_w, size_h); }
 
 	void set_ground(bool v) { ground = v; }
 	bool get_ground() { return ground; }
@@ -60,6 +60,13 @@ public:
 	void move_x(double v) { pos.x += v; }
 	void move_y(double v) { pos.y += v; }
 
+	void plus_hp(int v) {
+		hp += v;
+		if (hp > 100) {
+			hp = 100;
+		}
+	}
+
 private:
 
 	Vec2 old_pos;
@@ -75,7 +82,7 @@ private:
 	bool ground = false;
 
 	//ジャンプ初速
-	double jump_v0 = -30;
+	double jump_v0 = -28;
 
 
 	//コヨーテタイム
@@ -108,6 +115,14 @@ private:
 	InputGroup Z;
 	InputGroup X;
 
+	//歩行
+	bool walking = 0;
+	//ページ
+	int walk_page = 0;
+
+	double walk_count = 0;
+
+	double adjust_x = +7;
 };
 
 

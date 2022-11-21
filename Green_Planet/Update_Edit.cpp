@@ -83,6 +83,16 @@ void Game::update_edit_sub() {
 			}
 		}
 	}
+	else if (edit_type == U"event") {
+
+		for (size_t i = 0; i < edit_select_event.size(); i++) {
+
+			if (edit_select_event[i].leftClicked()) {
+
+				edit_event_name = edit_event[i].get_name();
+			}
+		}
+	}
 }
 
 void Game::update_edit_detail() {
@@ -182,7 +192,13 @@ void Game::write_edit() {
 	else if (edit_type == U"enemy") {
 		write_enemy_edit();
 	}
-	else if (edit_type == U"tile") {
+	else if (edit_type == U"tile_0") {
+		write_tile_edit();
+	}
+	else if (edit_type == U"tile_1") {
+		write_tile_edit();
+	}
+	else if (edit_type == U"tile_-1") {
 		write_tile_edit();
 	}
 	else if (edit_type == U"event") {
@@ -201,7 +217,7 @@ void Game::erase_edit() {
 	else if (edit_type == U"enemy") {
 		erase_enemy_edit();
 	}
-	else if (edit_type == U"tile") {
+	else if (edit_type == U"tile_0" or edit_type==U"tile_1" or edit_type==U"tile_-1") {
 		erase_tile_edit();
 	}
 	else if (edit_type == U"event") {
@@ -309,19 +325,25 @@ void Game::write_tile_edit() {
 
 		for (size_t i = 0; i < tile_data.size(); i++) {
 
-			int x = tile_data[i].get_x();
-			int y = tile_data[i].get_y();
 
-			if (edit_cur_x == x && edit_cur_y == y) {//すでにある
-				exist = 1;
 
-				tile_data[i].set_name(edit_tile_name);
+			if (tile_data[i].get_layer() == tile_layer) {
+
+				int x = tile_data[i].get_x();
+				int y = tile_data[i].get_y();
+
+				if (edit_cur_x == x && edit_cur_y == y) {//すでにある
+					exist = 1;
+
+					tile_data[i].set_name(edit_tile_name);
+				}
 			}
+
 		}
 
 		if (exist == 0) {//まだない
 
-			tile_data.push_back(Tile_Data(edit_tile_name, edit_cur_x, edit_cur_y));
+			tile_data.push_back(Tile_Data(edit_tile_name,tile_layer,edit_cur_x, edit_cur_y));
 		}
 	}
 }
@@ -332,12 +354,29 @@ void Game::erase_tile_edit() {
 
 		tile_data.remove_if([&](Tile_Data t) {
 
-			int x = t.get_x();
-			int y = t.get_y();
+			if(t.get_layer() == tile_layer) {
 
+				int x = t.get_x() * Definition::block_size;
+				int y = t.get_y() * Definition::block_size;
+				String name = t.get_name();
+				int w = TextureAsset(name).width();
+				int h = TextureAsset(name).height();
+
+				Rect rect(x, y, w, h);
+
+
+
+				Vec2 pos((Cursor::Pos().x + scroll_x), (Cursor::Pos().y + scroll_y));
+
+				if (pos.intersects(rect)) {
+					return true;
+				}
+			}
+
+			/*
 			if (edit_cur_x == x and edit_cur_y == y) {
 				return true;
-			}
+			}*/
 
 			return false;
 
@@ -473,12 +512,21 @@ void Game::update_edit_type_select() {
 					edit_type = U"enemy";
 					break;
 				case 2://Tile
-					edit_type = U"tile";
+					edit_type = U"tile_0";
+					tile_layer = 0;
 					break;
-				case 3://Tile
+				case 3:
+					edit_type = U"tile_1";
+					tile_layer = 1;
+					break;
+				case 4:
+					edit_type = U"tile_-1";
+					tile_layer = -1;
+					break;
+				case 5://Tile
 					edit_type = U"event";
 					break;
-				case 4://Start_Point
+				case 6://Start_Point
 					edit_type = U"start";
 					break;
 				default:
@@ -514,15 +562,39 @@ void Game::update_edit_type_select() {
 						edit_enemy_seek = false;
 					}
 					break;
-				case 2://Tile
-					if (edit_tile_seek == false) {
-						edit_tile_seek = true;
+				case 2://Tile_0
+					if (edit_tile_0_seek == false) {
+						edit_tile_0_seek = true;
 					}
 					else {
-						edit_tile_seek = false;
+						edit_tile_0_seek = false;
 					}
 					break;
-				case 3://Start_Point
+				case 3://Tile_1
+					if (edit_tile_1_seek == false) {
+						edit_tile_1_seek = true;
+					}
+					else {
+						edit_tile_1_seek = false;
+					}
+					break;
+				case 4://Tile_-1
+					if (edit_tile_01_seek == false) {
+						edit_tile_01_seek = true;
+					}
+					else {
+						edit_tile_01_seek = false;
+					}
+					break;
+				case 5://Event
+					if (edit_event_seek == false) {
+						edit_event_seek = true;
+					}
+					else {
+						edit_event_seek = false;
+					}
+					break;
+				case 6://Start_Point
 					if (edit_start_seek == false) {
 						edit_start_seek = true;
 					}
