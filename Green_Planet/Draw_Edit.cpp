@@ -75,6 +75,15 @@ void Game::draw_edit_sub() {
 
 		}
 	}
+	if (edit_type == U"tile_0" or edit_type==U"tile_1" or edit_type==U"tile_01") {
+
+		for (size_t i = 0; i < edit_select_tile.size(); i++) {
+
+			String name = edit_tile[i].get_name();
+			edit_select_tile[i](TextureAsset(name)).draw();
+
+		}
+	}
 }
 
 void Game::draw_edit_detail() {

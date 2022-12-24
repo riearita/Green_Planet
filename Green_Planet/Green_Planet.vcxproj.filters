@@ -253,6 +253,15 @@
     <Filter Include="Source Files\Data\Edit\Edit_Event">
       <UniqueIdentifier>{4baaa6c0-845a-433d-90cf-5cb316b6167c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Data\Edit\Edit_Tile">
+      <UniqueIdentifier>{f78199a1-0f26-4d9f-a484-57c47bfd2872}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Object\Moji_Effect">
+      <UniqueIdentifier>{27811bdf-05b1-4371-a6df-d1bfb469c779}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Object\Guide">
+      <UniqueIdentifier>{590ab2c7-d00f-4edc-8d44-4ad8e2d9e07d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -341,6 +350,15 @@
     </ClCompile>
     <ClCompile Include="Update_Enemy.cpp">
       <Filter>Source Files\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Moji_Effect.cpp">
+      <Filter>Source Files\Object\Moji_Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Fade.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Draw_Outline_Text.cpp">
+      <Filter>Source Files\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1054,6 +1072,15 @@
     </ClInclude>
     <ClInclude Include="Status.hpp">
       <Filter>Source Files\Status</Filter>
+    </ClInclude>
+    <ClInclude Include="Edit_Tile.hpp">
+      <Filter>Source Files\Data\Edit\Edit_Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Moji_Effect.hpp">
+      <Filter>Source Files\Object\Moji_Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Guide.hpp">
+      <Filter>Source Files\Object\Guide</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

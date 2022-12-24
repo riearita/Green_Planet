@@ -4,10 +4,17 @@ void Enemy_Bullet::first() {
 
 	if (name == U"blue") {
 		r = 20;
-		delete_count = 1;
+		delete_count = 0.9;
 
 		adjust_x = -20;
 		adjust_y = -20;
+	}
+	else if (name == U"drop") {
+		r = 20;
+		delete_count = 99;
+
+		adjust_x = -25;
+		adjust_y = -50;
 	}
 }
 

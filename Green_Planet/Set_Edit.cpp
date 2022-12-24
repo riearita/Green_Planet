@@ -52,16 +52,28 @@ void Game::set_edit() {
 		edit_block.push_back(Edit_Block(U"soil_grass_right_cut"));
 		edit_block.push_back(Edit_Block(U"soil_grass_double_cut"));
 		edit_block.push_back(Edit_Block(U"break_block"));
+		edit_block.push_back(Edit_Block(U"concrete"));
 
 		//edit_block.push_back(Edit_Block(U"move_block"));
 		//edit_block.push_back(Edit_Block(U"move_block_2"));
 
 		edit_enemy.push_back(Edit_Enemy(U"maru"));
 		edit_enemy.push_back(Edit_Enemy(U"don"));
-		edit_enemy.push_back(Edit_Enemy(U"pyou"));
+		edit_enemy.push_back(Edit_Enemy(U"huwa"));
+		edit_enemy.push_back(Edit_Enemy(U"maru_quick"));
 
 		edit_event.push_back(Edit_Event(U"life_server"));
 		edit_event.push_back(Edit_Event(U"save_server"));
+		edit_event.push_back(Edit_Event(U"aerial_display"));
+
+
+		edit_tile.push_back(Edit_Tile(U"tree"));
+		edit_tile.push_back(Edit_Tile(U"plant"));
+		edit_tile.push_back(Edit_Tile(U"plant_2"));
+		edit_tile.push_back(Edit_Tile(U"building"));
+		edit_tile.push_back(Edit_Tile(U"window"));
+		edit_tile.push_back(Edit_Tile(U"base"));
+		
 
 	for (size_t i = 0; i < edit_block.size(); i++) {
 
@@ -85,6 +97,14 @@ void Game::set_edit() {
 		int y = int(i) / 10;
 
 		edit_select_event.push_back(Rect(360 + x * 120, 300 + y * 120, 120, 120));
+	}
+
+	for (size_t i = 0; i < edit_tile.size(); i++) {
+
+		int x = int(i) % 10;
+		int y = int(i) / 10;
+
+		edit_select_tile.push_back(Rect(360 + x * 120, 300 + y * 120, 120, 120));
 	}
 
 

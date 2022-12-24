@@ -21,7 +21,8 @@ public:
 	
 	void update_maru();
 	void update_don();
-	
+	void update_huwa();
+	void update_maru_quick();
 
 	void add_gravity();
 
@@ -73,6 +74,8 @@ public:
 
 	void reset_make_bullet() { make_bullet = -1; }
 
+	bool get_fly() { return fly; }
+
 private:
 
 
@@ -85,7 +88,7 @@ private:
 	int size_h = 0;
 	int size_r = 0;
 
-	int fly = 0;
+	bool fly = false;
 
 	double gravity = 100;
 
@@ -103,6 +106,8 @@ private:
 
 	double count = 0;
 
+	double count_2 = 0;
+
 	int direction = 3;
 
 	double turn_count = 0;
@@ -117,6 +122,9 @@ private:
 
 	int make_bullet_x = 0;
 	int make_bullet_y = 0;
+
+	int page = 0;
+	bool use_page = false;
 
 };
 

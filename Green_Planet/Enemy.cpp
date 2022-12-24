@@ -15,7 +15,22 @@ void Enemy::first() {
 
 		hp = 3;
 	}
-	
+	else if (name == U"huwa") {
+		size_w = 200;
+		size_h = 100;
+
+		hp = 3;
+
+		fly = true;
+
+		use_page = true;
+	}
+	if (name == U"maru_quick") {
+		size_w = 80;
+		size_h = 80;
+
+		hp = 8;
+	}
 }
 
 void Enemy::update(double _d_time) {
@@ -27,6 +42,7 @@ void Enemy::update(double _d_time) {
 	add_gravity();
 
 	count += d_time;
+	count_2 += d_time;
 
 	update_each();
 
@@ -45,11 +61,20 @@ void Enemy::update(double _d_time) {
 
 void Enemy::draw(double x,double y) {
 
-	String image = name + U"_" + Format(direction);
+	String image;
 
+	if (use_page == false) {
+
+		image = name + U"_" + Format(direction);
+
+	}
+	else if (use_page == true) {
+
+		image = name + U"_" + Format(page) + U"_" + Format(direction);
+
+	}
+		TextureAsset(image).draw(pos.x - x, pos.y - y);
 	
-	TextureAsset(image).draw(pos.x - x, pos.y - y);
-
 	
 	
 
@@ -60,12 +85,15 @@ void Enemy::draw(double x,double y) {
 
 void Enemy::add_gravity() {
 
-	//重力として下に加速度を与える
-	speed.y += gravity * d_time;
+	if (fly == false) {
 
-	//加速制限
-	if (speed.y >= 60) {
-		speed.y = 60;
+		//重力として下に加速度を与える
+		speed.y += gravity * d_time;
+
+		//加速制限
+		if (speed.y >= 60) {
+			speed.y = 60;
+		}
 	}
 }
 
@@ -80,8 +108,6 @@ void Enemy::damage(int v) {
 
 void Enemy::turn_direction() {
 
-
-
 		if (direction == 3) {
 			
 			direction = 4;
@@ -92,7 +118,7 @@ void Enemy::turn_direction() {
 		}
 
 
-	
+
 }
 
 void Enemy::turn_direction_cliff() {

@@ -4,7 +4,7 @@ void Player_Bullet::first() {
 
 	if (name == U"green") {
 		r = 16;
-		delete_count = 0.3;
+		delete_count = 0.2;
 
 		adjust_x = -28;
 		adjust_y = -18;

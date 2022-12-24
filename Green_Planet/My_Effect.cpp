@@ -2,7 +2,7 @@
 
 void My_Effect::first() {
 
-	if (name == U"bullet_end_green") {
+	if (name == U"bullet_end_player_green") {
 
 		//画像のサイズ
 		wide = 56;
@@ -97,6 +97,58 @@ void My_Effect::first() {
 
 		page_change = delete_count / page_max;
 
+	}
+	else if (name == U"bullet_end_enemy_blue") {
+
+		//画像のサイズ
+		wide = 40;
+		height = 40;
+
+
+		//初期サイズ
+		size = 0;
+
+		//画像位置調整
+		adjust_x = wide * size / 2;
+		adjust_y = height * size / 2;
+
+		//１秒あたりの拡大率
+		size_up = 5;
+
+		//消去カウント
+		delete_count = 0.6;
+
+		//初期fade
+		fade_v = 1;
+
+		//fadeの消える量
+		fade_delete = 1 / delete_count;
+	}
+	else if (name == U"bullet_end_enemy_drop") {
+
+	//画像のサイズ
+	wide = 40;
+	height = 40;
+
+
+	//初期サイズ
+	size = 0;
+
+	//画像位置調整
+	adjust_x = wide * size / 2;
+	adjust_y = height * size / 2;
+
+	//１秒あたりの拡大率
+	size_up = 5;
+
+	//消去カウント
+	delete_count = 0.6;
+
+	//初期fade
+	fade_v = 1;
+
+	//fadeの消える量
+	fade_delete = 1 / delete_count;
 	}
 }
 

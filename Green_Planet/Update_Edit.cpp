@@ -93,6 +93,19 @@ void Game::update_edit_sub() {
 			}
 		}
 	}
+	else if (edit_type == U"tile_0" or edit_type==U"tile_1" or edit_type==U"tile_01") {
+
+
+		for (size_t i = 0; i < edit_select_tile.size(); i++) {
+
+			if (edit_select_tile[i].leftClicked()) {
+
+				edit_tile_name = edit_tile[i].get_name();
+			}
+		}
+	}
+
+
 }
 
 void Game::update_edit_detail() {
@@ -406,7 +419,9 @@ void Game::write_event_edit() {
 
 		if (exist == 0) {//まだない
 
+			
 			event_data.push_back(Event_Data(edit_event_name, edit_cur_x, edit_cur_y));
+			
 		}
 	}
 }

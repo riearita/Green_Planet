@@ -12,7 +12,8 @@
 #include"Event.hpp"
 #include"Back.hpp"
 #include"My_Effect.hpp"
-
+#include"Moji_Effect.hpp"
+#include"Guide.hpp"
 
 #include"Enemy_Data.hpp"
 #include"Item_Data.hpp"
@@ -26,6 +27,7 @@
 #include"Edit_Block.hpp"
 #include"Edit_Enemy.hpp"
 #include"Edit_Event.hpp"
+#include"Edit_Tile.hpp"
 
 #include"Weapon.hpp"
 
@@ -36,6 +38,8 @@
 #include"Item_Have.hpp"
 
 #include"Stage_Data.hpp"
+
+
 
 
 class Game {
@@ -75,7 +79,7 @@ public:
 
 	//Play
 
-	String stage = U"test";
+	String stage = U"1";
 
 	Weapon weapon;
 
@@ -91,6 +95,8 @@ public:
 	void player_bullet_vs_block();
 
 	void enemy_vs_block();
+
+	void enemy_bullet_vs_block();
 
 	void player_vs_enemy();
 
@@ -114,6 +120,8 @@ public:
 
 	void delete_my_effect();
 
+	void delete_moji_effect();
+
 	void cliff_turn_enemy();
 
 	void draw_UI();
@@ -136,6 +144,7 @@ public:
 	bool message_lock = false;
 
 	int stage_under_line = 0;
+	int stage_right_line = 0;
 
 	void update_event();
 	void draw_event();
@@ -143,6 +152,8 @@ public:
 	void z();
 	void next();
 	void z_end();
+	void change_map(String);
+	void end();
 
 	void ev_0();
 	void ev_1();
@@ -227,6 +238,8 @@ public:
 	Array<Player_Bullet> player_bullet;
 	Array<Enemy_Bullet> enemy_bullet;
 	Array<My_Effect> my_effect;
+	Array<Moji_Effect> moji_effect;
+	Array<Guide> guide;
 
 	//General
 	int scroll_x = 0;
@@ -275,10 +288,12 @@ public:
 	Array<Edit_Block> edit_block;
 	Array<Edit_Enemy> edit_enemy;
 	Array<Edit_Event> edit_event;
+	Array<Edit_Tile> edit_tile;
 
 	Array<Rect> edit_select_block;
 	Array<Rect> edit_select_enemy;
 	Array<Rect> edit_select_event;
+	Array<Rect> edit_select_tile;
 
 	Array<Edit_Number_Button> edit_number_button;
 
@@ -349,10 +364,29 @@ public:
 
 	int message_scene = 0;
 
+	bool message_box = false;
+
 	//Menu
 
 	void update_menu();
 	void draw_menu();
+
+	int menu_scene = 0;
+
+	void update_menu_main();
+	void draw_menu_main();
+
+	void update_menu_weapon();
+	void draw_menu_weapon();
+
+	void update_menu_item();
+	void draw_menu_item();
+
+	void update_menu_setting();
+	void draw_menu_setting();
+
+	int menu_main_cur_x = 0;
+	int menu_main_cur_y = 0;
 
 	//shader
 
@@ -366,6 +400,36 @@ public:
 	Array<Item_Have> item_have;
 
 
+	//Draw_Outline_Text
+
+	void draw_outline_text(String,String,int,int,Color);
+
+	void draw_moji_effect();
+
+	//Change_Scene
+
+	bool change_scene_on = 0;
+
+	void update_change_scene();
+	void draw_change_scene();
+
+
+	int change_scene_scene = 0;
+
+	double change_scene_count = 0;
+
+	double change_scene_alpha = 0;
+
+	String change_scene_type = U"";
+
+	void change_scene(int);
+	void change_stage(String);
+
+	int change_scene_go_scene = 0;
+	String change_scene_go_stage = U"";
+
+
+	void make_stage_data();
 };
 
    

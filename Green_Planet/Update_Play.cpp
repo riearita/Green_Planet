@@ -4,7 +4,7 @@ void Game::update_play() {
 
 	const double d_time = Scene::DeltaTime();
 
-	
+
 
 	
 	for (auto& b : block) {
@@ -30,6 +30,14 @@ void Game::update_play() {
 		e.update(d_time);
 	}
 
+	for (auto& m : moji_effect) {
+		m.update(d_time);
+	}
+
+	for (auto& g : guide) {
+		g.update(d_time);
+	}
+
 	weapon.update(d_time);
 
 	//VS_Block
@@ -49,6 +57,7 @@ void Game::update_play() {
 	death_enemy();
 
 	//VS_Enemy_Bullet
+	enemy_bullet_vs_block();
 	enemy_bullet_vs_player();
 	
 
@@ -60,6 +69,7 @@ void Game::update_play() {
 	delete_player_bullet();
 	delete_enemy_bullet();
 	delete_my_effect();
+	delete_moji_effect();
 
 
 
@@ -376,7 +386,9 @@ void Game::player_bullet_vs_block() {
 
 		if (p.get_will_delete() == true) {
 
-			String name = U"bullet_end_" + p.get_name();
+			String name = U"bullet_end_player_" + p.get_name();
+
+			
 
 			my_effect.push_back(My_Effect(name, p.get_circle().x, p.get_circle().y));
 
@@ -394,7 +406,7 @@ void Game::player_bullet_vs_block() {
 
 			if (block[i].get_rect().intersects(p.get_circle())) {
 
-				String name = U"bullet_end_" + p.get_name();
+				String name = U"bullet_end_player_" + p.get_name();
 
 				my_effect.push_back(My_Effect(name, p.get_circle().x, p.get_circle().y));
 
@@ -511,6 +523,7 @@ void Game::enemy_vs_block() {
 
 		//壁に当たったら方向転換
 		if (turn == true) {
+			
 			e.turn_direction();
 		}
 	}
@@ -529,38 +542,44 @@ void Game::use_weapon() {
 
 		if (can_use == true) {
 
-			if (KeyZ.pressed()) {
+			if (KeyZ.down()) {
 
-				double speed = 950;
-				double angle = 0;
-				int power = 1;
+				if (player_bullet.size() < 3) {
 
-				if (direction == 3) {
-					angle = 180;
+					double speed = 950;
+					double angle = 0;
+					int power = 1;
+
+					if (direction == 3) {
+						angle = 180;
+					}
+					else if (direction == 4) {
+						angle = 0;
+					}
+
+					int x = 0;
+					int y = 0;
+
+					if (direction == 3) {
+						x = int(pos.x) - 20;
+						y = int(pos.y) + 60;
+					}
+					else if (direction == 4) {
+						x = int(pos.x) + 70;
+						y = int(pos.y) + 60;
+					}
+
+
+
+					player_bullet.push_back(Player_Bullet(U"green", x, y, speed, angle, power));
+
+					weapon.use_energy(0);
+
+					weapon.set_cool_time(0.15);
 				}
-				else if (direction == 4) {
-					angle = 0;
+				else {
+					Print << U"pass";
 				}
-
-				int x = 0;
-				int y = 0;
-
-				if (direction == 3) {
-					x = int(pos.x) - 20;
-					y = int(pos.y)+60;
-				}
-				else if (direction == 4) {
-					x = int(pos.x) + 70;
-					y = int(pos.y)+60;
-				}
-
-				
-
-				player_bullet.push_back(Player_Bullet(U"green",x,y, speed, angle,power));
-
-				weapon.use_energy(0);
-
-				weapon.set_cool_time(0.15);
 			}
 		}
 		
@@ -650,12 +669,18 @@ void Game::player_vs_item() {
 
 			String name = i.get_name();
 
+			
+
+			int x = i.get_rect().x + i.get_rect().w/2-40;
+			int y = i.get_rect().y - 100;
+
 			if (name == U"heart") {
 				player.plus_hp(10);
 				
 			}
 			else if (name == U"metal") {
 				status.plus_metal(1);
+				moji_effect.push_back(Moji_Effect(U"+1", x, y,Color(55,186,0)));
 			}
 
 
@@ -673,7 +698,7 @@ void Game::delete_player_bullet() {
 
 		if (b.get_delete() == true) {
 
-			String name = U"bullet_end_" + b.get_name();
+			String name = U"bullet_end_player_" + b.get_name();
 
 			my_effect.push_back(My_Effect(name, b.get_circle().x, b.get_circle().y));
 
@@ -689,6 +714,11 @@ void Game::delete_enemy_bullet() {
 	enemy_bullet.remove_if([&](Enemy_Bullet b) {
 
 		if (b.get_delete() == true) {
+
+			String name = U"bullet_end_enemy_" + b.get_name();
+
+			my_effect.push_back(My_Effect(name, b.get_circle().x, b.get_circle().y));
+
 			return true;
 		}
 		return false;
@@ -701,14 +731,7 @@ void Game::control_scroll() {
 	const int WIN_W = 1920;
 	const int WIN_H = 1080;
 
-	//まだ不確定
-	int map_chip = 100;
-
-	int map_chip_w = Definition::block_size;
-	int map_chip_h =Definition::block_size;
-
-	const int MAP_X = map_chip * map_chip_w;
-	const int MAP_Y = map_chip * map_chip_h;
+	
 
 
 
@@ -723,7 +746,7 @@ void Game::control_scroll() {
 	double left = 0;
 
 	//マップ一番右
-	double right = MAP_X;
+	double right = stage_right_line;
 
 	//マップ一番上
 	double top = 0;
@@ -760,7 +783,7 @@ void Game::control_scroll() {
 
 void Game::check_event() {
 
-	if (KeyDown.down()) {
+	if (KeyUp.down()) {
 
 		if (player.get_ground() == true) {
 
@@ -805,28 +828,30 @@ void Game::cliff_turn_enemy() {
 
 	for (auto& e : enemy) {
 
-		Rect rect = e.get_rect();
-		Rect left_rect(rect.x, rect.y, 10, rect.h+10);
-		Rect right_rect(rect.x + rect.w - 10, rect.y, 10, rect.h+10);
+		if (e.get_fly() == false) {
 
-		bool left = false;
-		bool right = false;
+			Rect rect = e.get_rect();
+			Rect left_rect(rect.x, rect.y, 10, rect.h + 10);
+			Rect right_rect(rect.x + rect.w - 10, rect.y, 10, rect.h + 10);
 
-		for (auto& b : block) {
+			bool left = false;
+			bool right = false;
 
-			if (left_rect.intersects(b.get_rect())) {
-				left = true;
+			for (auto& b : block) {
+
+				if (left_rect.intersects(b.get_rect())) {
+					left = true;
+				}
+				if (right_rect.intersects(b.get_rect())) {
+					right = true;
+				}
 			}
-			if (right_rect.intersects(b.get_rect())) {
-				right = true;
+
+			//当たってない→壁際
+			if (left == false or right == false) {
+				e.turn_direction_cliff();
 			}
 		}
-
-		//当たってない→壁際
-		if (left == false or right==false) {
-			e.turn_direction_cliff();
-		}
-
 	}
 }
 
@@ -841,9 +866,12 @@ void Game::enemy_make_bullet() {
 
 		if (type == 0) {
 
-			enemy_bullet.push_back(Enemy_Bullet(U"blue", x, y, 300, 180, 20));
+			enemy_bullet.push_back(Enemy_Bullet(U"blue", x, y, 350, 180, 20));
 		}
+		if (type == 1) {
 
+			enemy_bullet.push_back(Enemy_Bullet(U"drop", x, y, 350, 90, 30));
+		}
 		e.reset_make_bullet();
 	}
 
@@ -860,6 +888,10 @@ void Game::enemy_bullet_vs_player() {
 
 			player.damage(power);
 
+			String name = U"bullet_end_enemy_" + e.get_name();
+
+			my_effect.push_back(My_Effect(name, e.get_circle().x, e.get_circle().y));
+
 			return true;
 		}
 		return false;
@@ -868,9 +900,91 @@ void Game::enemy_bullet_vs_player() {
 }
 
 
+void Game::delete_moji_effect() {
+
+	moji_effect.remove_if([&](Moji_Effect m) {
+
+		if (m.get_delete()==true) {
+
+			
+
+			return true;
+		}
+		return false;
+
+		});
+}
+
+
+void Game::enemy_bullet_vs_block() {
+
+	block.remove_if([&](Block b) {
+
+		if (b.get_name() == U"break_block") {
+
+			for (auto& e : enemy_bullet) {
+
+				if (b.get_rect().intersects(e.get_circle())) {
+
+					int x = b.get_rect().x + b.get_rect().w / 2;
+					int y = b.get_rect().y + b.get_rect().h / 2;
 
 
 
+					my_effect.push_back(My_Effect(U"block_smoke", x, y));
+
+					e.set_will_delete();
+
+					return true;
+				}
+
+
+			}
+		}
+
+		return false;
+
+			});
+
+
+	enemy_bullet.remove_if([&](Enemy_Bullet e) {
+
+		if (e.get_will_delete() == true) {
+
+			String name = U"bullet_end_enemy_" + e.get_name();
+
+			my_effect.push_back(My_Effect(name, e.get_circle().x, e.get_circle().y));
+
+			return true;
+		}
+
+		return false;
+
+			});
+
+
+	enemy_bullet.remove_if([&](Enemy_Bullet e) {
+
+		for (size_t i = 0; i < block.size(); i++) {
+
+			if (block[i].get_rect().intersects(e.get_circle())) {
+
+				String name = U"bullet_end_enemy_" + e.get_name();
+
+				my_effect.push_back(My_Effect(name, e.get_circle().x, e.get_circle().y));
+
+				return true;
+			}
+		}
+
+		return false;
+
+			});
+
+
+	
+
+}
 
 
 

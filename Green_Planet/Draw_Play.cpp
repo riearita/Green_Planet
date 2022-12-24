@@ -16,7 +16,7 @@ void Game::draw_object() {
 
 	for (auto& t : tile) {
 		if (t.get_layer() == 1) {
-			t.draw(scroll_x, scroll_y);
+			t.draw(scroll_x*0.9, scroll_y);
 		}
 	}
 
@@ -113,6 +113,14 @@ void Game::draw_object() {
 		m.draw(scroll_x, scroll_y);
 	}
 
+	
+
+	draw_moji_effect();
+
+	for (auto& g : guide) {
+		g.draw(scroll_x, scroll_y);
+	}
+
 	for (auto& t : tile) {
 		if (t.get_layer() == -1) {
 			t.draw(scroll_x, scroll_y);
@@ -164,5 +172,21 @@ void Game::draw_UI() {
 
 
 	TextureAsset(U"energy_bar")(0, 0, energy_bar_w, energy_bar_h).draw(30 + 120 + 10, 10 + 5 + 50 + 10-5);
+
+}
+
+
+void Game::draw_moji_effect() {
+
+	for (auto& m : moji_effect) {
+		
+		
+		String text = m.get_text();
+		int x = m.get_x();
+		int y = m.get_y();
+		Color color=m.get_color();
+
+		draw_outline_text(U"font_SDF_33", text, x-scroll_x, y-scroll_y, color);
+	}
 
 }

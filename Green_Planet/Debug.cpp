@@ -24,6 +24,9 @@ void Game::set_debug() {
 	}
 */
 
+	stage = U"garden";
+
+
 
 	load_stage();
 	make_stage();
@@ -35,4 +38,10 @@ void Game::set_debug() {
 
 
 	
+}
+
+void Game::make_stage_data() {
+
+
+	save_edit();
 }

@@ -50,6 +50,8 @@ void Game::draw_message() {
 
 void Game::set_message(String v) {
 
+	message_box = true;
+
 	//一回しか通らない
 	if (message_lock == false) {
 

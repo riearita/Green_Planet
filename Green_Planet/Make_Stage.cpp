@@ -6,6 +6,9 @@ void Game::make_stage() {
 	enemy.clear();
 	tile.clear();
 	event.clear();
+	player_bullet.clear();
+	enemy_bullet.clear();
+	my_effect.clear();
 	
 
 	for (auto& b : block_data) {
@@ -76,17 +79,33 @@ void Game::make_stage() {
 
 	stage_under_line = bottom_y + Definition::block_size;
 
+	int right = 0;
+
+	for (size_t i = 0; i < block.size(); i++) {
+
+		if (block[i].get_rect().x > right) {
+			right = int(block[i].get_rect().x);
+		}
+	}
+
+	stage_right_line = right + Definition::block_size;
+
 
 	//敵位置調整
 	
 	for (auto& e : enemy) {
 
-		int h=e.get_size_h();
+		for (auto& b : block) {
 
-		int buried = h - Definition::block_size;
-	
-		e.set_pos_y(e.get_rect().y - buried);
+			if (e.get_rect().intersects(b.get_rect())) {
 
+				int h = e.get_size_h();
+
+				int buried = h - Definition::block_size;
+
+				e.set_pos_y(e.get_rect().y - buried);
+			}
+		}
 	}
 
 	//背景
@@ -98,5 +117,12 @@ void Game::make_stage() {
 		}
 	}
 
+	//ステージ範囲設定
 
+	for (auto& s : stage_data) {
+
+		if (s.get_name() == stage) {
+			back.set_name(s.get_back_name());
+		}
+	}
 }

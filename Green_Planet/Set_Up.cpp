@@ -50,14 +50,22 @@ void Game::set_image() {
 	TextureAsset::Register(U"soil_grass_right_cut", U"image/block/soil_grass_right_cut.png");
 	TextureAsset::Register(U"soil_grass_double_cut", U"image/block/soil_grass_double_cut.png");
 	TextureAsset::Register(U"break_block", U"image/block/break_block.png");
+	TextureAsset::Register(U"concrete", U"image/block/concrete.png");
 
 
 	TextureAsset::Register(U"move_block", U"image/block/move_block.png");
 
 	//enemy
-	TextureAsset::Register(U"maru_3", U"image/enemy/maru_3.png");
-	TextureAsset::Register(U"maru_4", U"image/enemy/maru_4.png");
-	TextureAsset::Register(U"don_3", U"image/enemy/don_3.png");
+	TextureAsset::Register(U"maru_3", U"image/enemy/maru/3.png");
+	TextureAsset::Register(U"maru_4", U"image/enemy/maru/4.png");
+	TextureAsset::Register(U"don_3", U"image/enemy/don/3.png");
+	TextureAsset::Register(U"huwa_3", U"image/enemy/huwa/3.png");
+	TextureAsset::Register(U"huwa_0_3", U"image/enemy/huwa/0_3.png");
+	TextureAsset::Register(U"huwa_1_3", U"image/enemy/huwa/1_3.png");
+	TextureAsset::Register(U"huwa_0_4", U"image/enemy/huwa/0_4.png");
+	TextureAsset::Register(U"huwa_1_4", U"image/enemy/huwa/1_4.png");
+	TextureAsset::Register(U"maru_quick_3", U"image/enemy/maru_quick/3.png");
+	TextureAsset::Register(U"maru_quick_4", U"image/enemy/maru_quick/4.png");
 
 	//start
 	TextureAsset::Register(U"start", U"image/start.png");
@@ -66,6 +74,12 @@ void Game::set_image() {
 	
 
 	TextureAsset::Register(U"tree", U"image/tile/tree.png");
+	TextureAsset::Register(U"plant", U"image/tile/plant.png");
+	TextureAsset::Register(U"plant_2", U"image/tile/plant_2.png");
+	TextureAsset::Register(U"building", U"image/tile/building.png");
+	TextureAsset::Register(U"window", U"image/tile/window.png");
+	TextureAsset::Register(U"base", U"image/tile/base.png");
+	TextureAsset::Register(U"aerial_display", U"image/tile/aerial_display.png");
 
 	//event
 	TextureAsset::Register(U"event", U"image/event.png");
@@ -74,16 +88,22 @@ void Game::set_image() {
 
 	//back
 	TextureAsset::Register(U"sky", U"image/back/sky.png");
+	TextureAsset::Register(U"base", U"image/back/base.png");
 
 	//bullet
 	TextureAsset::Register(U"bullet_player_green", U"image/bullet/player/green.png");
-	TextureAsset::Register(U"bullet_enemy_blue", U"image/bullet/enemy/blue.png");
 
+	TextureAsset::Register(U"bullet_enemy_blue", U"image/bullet/enemy/blue.png");
+	TextureAsset::Register(U"bullet_enemy_drop", U"image/bullet/enemy/drop.png");
 	//weapon
 	TextureAsset::Register(U"shot_gun", U"image/weapon/shot_gun.png");
 
 	//My_Effect
-	TextureAsset::Register(U"bullet_end_green", U"image/effect/bullet_end_green.png");
+	TextureAsset::Register(U"bullet_end_player_green", U"image/effect/bullet_end/player/green.png");
+
+	TextureAsset::Register(U"bullet_end_enemy_blue", U"image/effect/bullet_end/enemy/blue.png");
+	TextureAsset::Register(U"bullet_end_enemy_drop", U"image/effect/bullet_end/enemy/drop.png");
+
 
 	for (int i = 0; i <11; i++) {
 		String name = U"enemy_smoke_" + Format(i);
@@ -109,6 +129,11 @@ void Game::set_image() {
 	TextureAsset::Register(U"heart", U"image/item/heart.png");
 	TextureAsset::Register(U"metal", U"image/item/metal.png");
 
+	//menu
+	TextureAsset::Register(U"menu_back", U"image/menu/back.png");
+	TextureAsset::Register(U"menu_weapon_icon", U"image/menu/weapon_icon.png");
+
+
 	//UI
 	TextureAsset::Register(U"message_box", U"image/UI/message_box.png");
 	TextureAsset::Register(U"weapon_box", U"image/UI/weapon_box.png");
@@ -116,11 +141,16 @@ void Game::set_image() {
 	TextureAsset::Register(U"bar_frame", U"image/UI/bar_frame.png");
 	TextureAsset::Register(U"hp_bar", U"image/UI/hp_bar.png");
 	TextureAsset::Register(U"energy_bar", U"image/UI/energy_bar.png");
+
+	TextureAsset::Register(U"black", U"image/UI/black.png");
 }
 
 void Game::set_font() {
 
 	FontAsset::Register(U"font_45",45, U"font/NotoSansJP-Medium.otf");
+	FontAsset::Register(U"font_k_30", 30, U"font/Kikakana-21-Regular.otf");
+
+	FontAsset::Register(U"font_SDF_33", FontMethod::SDF, 33, U"font/Kikakana-21-Bold.otf");
 }
 
 void Game::set_music() {
@@ -163,7 +193,8 @@ void Game::set_stage_data() {
 	Stage_name・Back_name
 	*/
 
-	stage_data.push_back(Stage_Data(U"test",U"sky"));
+	stage_data.push_back(Stage_Data(U"garden",U"sky"));
+	//stage_data.push_back(Stage_Data(U"base", U"base"));
 
 }
 

@@ -4,7 +4,10 @@ void Game::update_event() {
 
 	const double d_time = Scene::DeltaTime();
 
+	message_box = false;
+
 	update_message(d_time);
+
 
 	switch (event_number)
 	{
@@ -52,7 +55,9 @@ void Game::update_event() {
 
 void Game::draw_event() {
 
-	draw_message();
+	if (message_box == true) {
+		draw_message();
+	}
 }
 
 //ライフサーバー
@@ -78,11 +83,11 @@ void Game::ev_1() {
 	}
 }
 
-
+//change_map
 void Game::ev_2() {
 	if (es == 0) {
-		set_message(U"２番目");
-		z_end();
+		change_stage(U"base");
+		end();
 	}
 }
 
@@ -140,6 +145,17 @@ void Game::z() {
 	}
 }
 
+void Game::end() {
+
+	main_scene = 0;
+
+	es = 0;
+
+	message_count = 0;
+	message_lock = false;
+	message_scene = false;
+}
+
 void Game::next() {
 	es++;
 	message_count = 0;
@@ -152,14 +168,20 @@ void Game::z_end() {
 
 		if (message_scene==0 or message_scene == 3) {
 
-			main_scene = 0;
-
-			es = 0;
-
-			message_count = 0;
-			message_lock = false;
-			message_scene = false;
+			end();
 
 		}
 	}
+}
+
+void Game::change_map(String v) {
+
+	stage = v;
+
+	load_stage();
+	make_stage();
+
+	message_count = 0;
+	message_lock = false;
+	message_scene = false;
 }

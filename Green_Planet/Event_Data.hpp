@@ -15,7 +15,15 @@ public:
 		name = _name;
 		x = _x;
 		y = _y;
+
+		if (name == U"life_server") {
+			number = 0;
+		}
+		else if (name == U"save_server") {
+			number = 1;
+		}
 	}
+
 
 	String get_name() { return name; }
 	int get_x() { return x; }
